@@ -12,5 +12,13 @@
         android:layout_centerInParent="true"
         android:text="Tab 1"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
- 
+    <ImageView
+        android:id="@+id/button_add_Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/button_plus_green"
+        android:background="@android:color/transparent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="43dp" />
 </RelativeLayout>
