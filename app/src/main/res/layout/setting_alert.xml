@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <RelativeLayout
-            android:id="@+id/Function_Setting_Alert"
+            android:id="@+id/Function_Setting_Alarm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -22,12 +22,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="EditAlert"
+                android:text="EditAlarm"
                 android:textSize="24dp"
                 android:textColor="@android:color/black"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:id="@+id/Function_Setting_EditAlert"
+                android:id="@+id/Function_Setting_EditAlarm"
                 android:layout_centerInParent="true"
                  />
             <TextView
@@ -41,7 +41,7 @@
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/Head_Setting_Time"
-            android:layout_below="@id/Function_Setting_Alert"
+            android:layout_below="@id/Function_Setting_Alarm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -50,7 +50,7 @@
                 android:layout_margin="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chọn Game Alert:"
+                android:text="Chọn Game Alarm:"
                 android:textColor="@android:color/black"/>
             <TextView
                 android:id="@+id/GameName"
@@ -64,7 +64,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/Time_Setting_Alert"
+            android:id="@+id/Time_Setting_Alarm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/Head_Setting_Time"
@@ -88,10 +88,10 @@
 
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/Day_Setting_Alert"
+            android:id="@+id/Day_Setting_Alarm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/Time_Setting_Alert"
+            android:layout_below="@id/Time_Setting_Alarm"
             android:layout_margin="5dp"
             android:background="@android:color/white">
             <TextView
@@ -103,16 +103,17 @@
                 android:textColor="@android:color/black"
                 />
             <TextView
-                android:layout_margin="10dp"
                 android:id="@+id/btn_T2"
-                android:layout_below="@id/text_chose_day_repeat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="T2"
                 android:gravity="center"
                 android:background="@drawable/border_btn"
                 android:textColor="@android:color/black"
-                />
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/text_chose_day_repeat" />
             <TextView
                 android:id="@+id/btn_T3"
                 android:layout_marginRight="10dp"
@@ -188,10 +189,10 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/Body_Setting_Alert"
+            android:id="@+id/Body_Setting_Alarm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/Day_Setting_Alert"
+            android:layout_below="@id/Day_Setting_Alarm"
             android:layout_margin="5dp"
             android:background="@android:color/white">
             <TextView
@@ -200,7 +201,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nhãn:"
-                android:textSize="20dp"
+                android:textSize="16dp"
                 android:textColor="@android:color/black"
                 />
             <EditText
@@ -208,22 +209,53 @@
                 android:layout_height="wrap_content"
                 android:text="T2 tot lanh"
                 android:textSize="20dp"
-
                 android:background="@android:color/transparent"
                 android:layout_alignBaseline="@+id/text_chose_label"
                 android:layout_alignBottom="@+id/text_chose_label"
                 android:layout_toEndOf="@+id/text_chose_label"/>
             <RelativeLayout
+                android:id="@+id/AlarmColor"
+                android:layout_below="@id/text_chose_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/text_chose_AlarmColor"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chọn AlarmColor:"
+                    android:textSize="16dp"
+                    android:textColor="@android:color/black" />
+                <TextView
+                    android:id="@+id/btn_color_yellow"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/text_chose_AlarmColor"
+                    android:gravity="center"
+                    android:background="@drawable/border_btn"
+                    android:textColor="@android:color/black"/>
+                <TextView
+                    android:id="@+id/btn_color_pink"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/btn_color_yellow"
+                    android:gravity="center"
+                    android:background="@drawable/border_btn"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/text_chose_label">
+                android:layout_below="@id/AlarmColor">
                 <TextView
                     android:id="@+id/text_chose_ringstone"
                     android:layout_margin="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nhạc chuông:"
-                    android:textSize="20dp"
+                    android:textSize="16dp"
                     android:textColor="@android:color/black"
                     />
                 <TextView
@@ -233,7 +265,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Đã chọn - "
-                    android:textSize="20dp"
+                    android:textSize="16dp"
                     android:textColor="@android:color/black"
                     android:layout_below="@id/text_chose_ringstone"
                     />
@@ -243,7 +275,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="RingRingRing "
-                    android:textSize="20dp"
+                    android:textSize="16dp"
                     android:textColor="@android:color/black"
                     android:layout_alignBaseline="@+id/text_chose_ringstone_chose"
                     android:layout_alignBottom="@+id/text_chose_ringstone_chose"
@@ -253,10 +285,10 @@
 
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/Save_Setting_Alert"
+            android:id="@+id/Save_Setting_Alarm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/Body_Setting_Alert"
+            android:layout_below="@id/Body_Setting_Alarm"
             android:layout_margin="5dp"
             android:background="@color/colorAccent">
             <TextView

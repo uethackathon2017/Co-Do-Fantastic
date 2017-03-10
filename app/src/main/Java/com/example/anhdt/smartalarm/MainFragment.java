@@ -1,6 +1,7 @@
 package com.example.anhdt.smartalarm;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,7 @@ import com.example.anhdt.smartalarm.R;
  * A simple {@link Fragment} subclass.
  */
 public class MainFragment extends Fragment implements View.OnClickListener {
-
-    private ImageView buttonAddTime;
+    FloatingActionButton addAlarm;
     public MainFragment() {
         // Required empty public constructor
     }
@@ -34,15 +34,14 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         initComponent(view);
     }
     private void initComponent(View view) {
-        buttonAddTime = (ImageView) view.findViewById(R.id.button_add_Time);
-
-        buttonAddTime.setOnClickListener(this);
+        addAlarm = (FloatingActionButton) view.findViewById(R.id.add_alarm);
+        addAlarm.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.button_add_Time:
+            case R.id.add_alarm:
 
                 break;
         }
