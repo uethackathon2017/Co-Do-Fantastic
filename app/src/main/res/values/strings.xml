@@ -3,4 +3,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="alarm">Đặt báo thức</string>
+    <string name="weather">Thời tiết</string>
+    <string name="news">Tin tức</string>
 </resources>

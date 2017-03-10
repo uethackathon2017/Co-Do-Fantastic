@@ -1,5 +1,6 @@
 package com.example.anhdt.smartalarm;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.view.View;
 
 
 import com.example.anhdt.smartalarm.R;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 /**
  * Created by Admin on 10/03/2017.
@@ -18,39 +20,21 @@ import com.example.anhdt.smartalarm.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    private SmartTabLayout tabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
+        tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setBackgroundColor(Color.TRANSPARENT);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), 3);
 
 
         viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+        tabLayout.setViewPager(viewPager);
 
     }
 

@@ -23,12 +23,11 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                 MainFragment mainFragment = new MainFragment();
-                return mainFragment;
+                return new MainFragment();
             case 1:
-                TabContainsGameFragment tabContainsGameFragment = new TabContainsGameFragment();
-                return tabContainsGameFragment;
-
+                return new WeatherFragment();
+            case 2:
+                return new NewsFragment();
             default:
                 return null;
         }
@@ -43,12 +42,11 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                MainFragment mainFragment = new MainFragment();
-                return "Alert";
+                return "Báo thức";
             case 1:
-                TabContainsGameFragment tabContainsGameFragment = new TabContainsGameFragment();
-                return "Introduce";
-
+                return "Thời tiết";
+            case 2:
+                return "Tin tức";
             default:
                 return null;
         }
