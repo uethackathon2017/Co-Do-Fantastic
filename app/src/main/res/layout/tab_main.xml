@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/tab_main">
+    android:id="@+id/tab_main"
+    android:background="@drawable/background_application">
  
     <TextView
         android:id="@+id/textView"
@@ -21,4 +22,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="43dp" />
+
+    <include
+        layout="@layout/item_alarm"/>
 </RelativeLayout>
