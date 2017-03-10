@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="myTimePickerStyle" parent="@android:style/Widget.Material.Light.TimePicker">
+        <item name="android:numbersTextColor">#ffffff</item>
+        <item name="android:colorBackground">#ffffff</item>
+        <item name="android:colorActivatedHighlight">#ffffff</item>
+        <item name="android:amPmBackgroundColor">#ffffff</item>
+        <item name="android:numbersBackgroundColor">#000000</item>
+        <item name="android:numbersSelectorColor">@color/colorOrange</item>
+        <item name="android:activatedBackgroundIndicator">@color/colorOrange</item>
+        <item name="android:colorControlActivated">@color/colorOrange</item>
+        <item name="android:headerBackground">@android:color/transparent</item>
+        <item name="android:amPmTextColor">#ffffff</item>
+        <item name="android:textColorPrimary">#ffffff</item>
+        <item name="android:timePickerMode">spinner</item>
+
+    </style>
+
+</resources>

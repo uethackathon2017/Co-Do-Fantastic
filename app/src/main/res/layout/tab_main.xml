@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/tab_main"
-    android:background="@drawable/background_application">
+    android:background="@mipmap/background_application">
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_alarm"
