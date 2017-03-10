@@ -1,10 +1,12 @@
-package com.example.anhdt.smartalarm;
+package com.example.anhdt.smartalarm.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.anhdt.smartalarm.MainFragment;
+import com.example.anhdt.smartalarm.fragments.MainFragment;
+import com.example.anhdt.smartalarm.fragments.NewsFragment;
+import com.example.anhdt.smartalarm.fragments.WeatherFragment;
 
 /**
  * Created by Admin on 10/03/2017.

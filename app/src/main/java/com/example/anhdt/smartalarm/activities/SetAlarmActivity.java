@@ -1,4 +1,4 @@
-package com.example.anhdt.smartalarm;
+package com.example.anhdt.smartalarm.activities;
 
 import android.content.res.Resources;
 import android.graphics.Paint;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TimePicker;
+
+import com.example.anhdt.smartalarm.R;
 
 import java.lang.reflect.Field;
 

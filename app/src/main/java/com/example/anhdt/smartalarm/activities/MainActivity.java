@@ -1,16 +1,12 @@
-package com.example.anhdt.smartalarm;
+package com.example.anhdt.smartalarm.activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.support.design.widget.TabLayout;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
 
+import com.example.anhdt.smartalarm.adapters.PagerAdapter;
 import com.example.anhdt.smartalarm.R;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
@@ -31,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setBackgroundColor(Color.TRANSPARENT);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), 3);
-
 
         viewPager.setAdapter(adapter);
         tabLayout.setViewPager(viewPager);

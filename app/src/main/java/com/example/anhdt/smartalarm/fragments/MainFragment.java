@@ -1,4 +1,4 @@
-package com.example.anhdt.smartalarm;
+package com.example.anhdt.smartalarm.fragments;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.example.anhdt.smartalarm.R;
 
@@ -25,7 +24,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.tab_main, container, false);
+        return inflater.inflate(R.layout.fragment_main, container, false);
 
     }
     @Override
