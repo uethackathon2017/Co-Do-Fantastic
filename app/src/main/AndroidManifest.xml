@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.anhdt.smartalarm">
-
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,6 +21,7 @@
         <activity android:name=".activities.SetAlarmActivity">
 
         </activity>
+
         <receiver android:name=".receivers.AlarmAlertBroadcastReciever" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -30,6 +33,7 @@
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             />
+        <activity android:name=".activities.DisPlayWebPageActivity"></activity>
     </application>
 
 </manifest>
