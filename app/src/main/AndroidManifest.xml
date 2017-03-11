@@ -17,7 +17,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".activities.SetAlarmActivity" />
 
@@ -42,11 +46,7 @@
         <activity android:name=".challenges.countstep.activities.CountStepActivity" />
         <activity android:name=".challenges.recognize.helper.SelectImageActivity" />
         <activity android:name=".challenges.recognize.activities.DescribeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
