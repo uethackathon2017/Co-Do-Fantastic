@@ -34,6 +34,6 @@
             android:layout_alignParentBottom="true"
             android:textSize="18sp"
             android:padding="10dp"
-            android:background="#25000000"/>
+            android:background="#66000000"/>
     </RelativeLayout>
 </RelativeLayout>

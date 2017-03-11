@@ -396,7 +396,7 @@
                     android:id="@+id/news_travel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Khoa học"
+                    android:text="Du lịch"
                     android:textColor="@android:color/white"
                     android:layout_below="@id/icon_news_travel"
                     android:layout_centerInParent="true"/>
@@ -421,7 +421,7 @@
                     android:id="@+id/news_fun"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Kinh doanh"
+                    android:text="Cười"
                     android:textColor="@android:color/white"
                     android:layout_below="@id/icon_news_fun"
                     android:layout_centerInParent="true"/>
@@ -561,8 +561,28 @@
 
 
         </RelativeLayout>
-    </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/relaytive_continues_Home"
+            android:layout_below="@id/relaytive_news"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="#26ffffff">
+            <TextView
+                android:id="@+id/tv_continues_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xem thêm ..."
+                android:textSize="18sp"
+                android:layout_margin="10dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@android:color/white"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
 
 
 

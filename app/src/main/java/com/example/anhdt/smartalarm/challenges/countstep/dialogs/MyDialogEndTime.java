@@ -1,4 +1,4 @@
-package com.example.anhdt.smartalarm.countstep.dialogs;
+package com.example.anhdt.smartalarm.challenges.countstep.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;

@@ -113,7 +113,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener{
     private RelativeLayout relaytiveNewsTravel;
     private ImageView iconNewsTravel;
     private TextView newsTravel;
-    private RelativeLayout relaytiveNewsFun;
+    private RelativeLayout relaytiveNewsFun,relaytive_continues_Home;
     private ImageView iconNewsFun;
     private TextView newsFun;
     private RelativeLayout relaytiveNews1;
@@ -174,13 +174,15 @@ public class NewsFragment extends Fragment implements View.OnClickListener{
         String rss_link = "http://vnexpress.net/rss/tin-moi-nhat.rss";
 
         new loadRSSFeedItems().execute(rss_link);
+        initHashMapWeatherConditionDescriotion();
+        initHashMapWeatherConditon();
         initComponent(view);
     }
 
     private void initHashMapWeatherConditon(){
         weatherCondition.put("Thunderstorm","Bão");
-        weatherCondition.put("Drizzle","Mưa nhỏ");
-        weatherCondition.put("Rain","Mưa to");
+        weatherCondition.put("Drizzle","Mưa phùn");
+        weatherCondition.put("Rain","Mưa");
         weatherCondition.put("Snow","Tuyết");
         weatherCondition.put("Atmosphere","Khí trời");
         weatherCondition.put("Clear","Trog sạch");
@@ -210,27 +212,56 @@ public class NewsFragment extends Fragment implements View.OnClickListener{
         weatherConditionDescription.put("shower drizzle","Mưa vừa");
         weatherConditionDescription.put("light rain","Mưa nhỏ");
         weatherConditionDescription.put("moderate rain","Mưa vừa");
-        weatherConditionDescription.put("heavy intensity rain","Mưa cường độ nặng");
-        weatherConditionDescription.put("","");
-        weatherConditionDescription.put("","");
-        weatherConditionDescription.put("","");
-        weatherConditionDescription.put("","");
-        weatherConditionDescription.put("","");
-        weatherConditionDescription.put("","");
-        weatherConditionDescription.put("","");
-        weatherConditionDescription.put("","");
-        weatherConditionDescription.put("","");
-        weatherConditionDescription.put("","");
-        weatherConditionDescription.put("","");
-        weatherConditionDescription.put("","");
-        weatherConditionDescription.put("","");
-        weatherConditionDescription.put("","");
-        weatherConditionDescription.put("","");
-        weatherConditionDescription.put("","");
-        weatherConditionDescription.put("","");
-        weatherConditionDescription.put("","");
-
-
+        weatherConditionDescription.put("heavy intensity rain","Mưa cường độ lớn");
+        weatherConditionDescription.put("very heavy rain","Mưa rất lớn");
+        weatherConditionDescription.put("extreme rain","Thời tiết mưa xấu");
+        weatherConditionDescription.put("freezing rain","Mưa lạnh");
+        weatherConditionDescription.put("light intensity shower rain","Mưa rào");
+        weatherConditionDescription.put("shower rain","Mưa nặng hạt");
+        weatherConditionDescription.put("heavy intensity shower rain","Cường độ mưa lớn");
+        weatherConditionDescription.put("ragged shower rain","Mưa rào");
+        weatherConditionDescription.put("light snow","Tuyết nhẹ");
+        weatherConditionDescription.put("snow","Tuyết");
+        weatherConditionDescription.put("heavy snow","Tuyết rơi nhiều");
+        weatherConditionDescription.put("sleet","Mưa tuyết");
+        weatherConditionDescription.put("shower sleet","Mưa đá");
+        weatherConditionDescription.put("light rain and snow","Mưa nhẹ kèm theo tuyết rơi");
+        weatherConditionDescription.put("rain and snow","Mưa và xuất hiện tuyết rơi");
+        weatherConditionDescription.put("light shower snow","Mưa tuyết nhẹ");
+        weatherConditionDescription.put("shower snow","Mưa tuyết");
+        weatherConditionDescription.put("heavy shower snow","Mưa tuyết nặng");
+        weatherConditionDescription.put("mist","Sương mù");
+        weatherConditionDescription.put("smoke","Khói");
+        weatherConditionDescription.put("haze","Sương mù");
+        weatherConditionDescription.put("sand, dust whirls","Cát và bụi xoáy");
+        weatherConditionDescription.put("fog","Sương mù");
+        weatherConditionDescription.put("sand","Cát");
+        weatherConditionDescription.put("dust","Bụi bặm");
+        weatherConditionDescription.put("volcanic ash","Tro núi lửa");
+        weatherConditionDescription.put("squalls","Gió giật");
+        weatherConditionDescription.put("tornado","Vòi rồng");
+        weatherConditionDescription.put("clear sky","Bầu trời trong xanh");
+        weatherConditionDescription.put("few clouds","Mây nhẹ");
+        weatherConditionDescription.put("scattered clouds","Trời quang mây");
+        weatherConditionDescription.put("broken clouds","Không có mây");
+        weatherConditionDescription.put("overcast clouds","Nhiều mây u ám");
+        weatherConditionDescription.put("tropical storm","Bão nhiệt đới");
+        weatherConditionDescription.put("hurricane","Bão");
+        weatherConditionDescription.put("cold","Lạnh");
+        weatherConditionDescription.put("hot","Nóng");
+        weatherConditionDescription.put("windy","gió");
+        weatherConditionDescription.put("hail","Mưa đá");
+        weatherConditionDescription.put("calm","yên tĩnh");
+        weatherConditionDescription.put("light breeze","gió nhẹ");
+        weatherConditionDescription.put("gentle breeze","gió nhẹ nhàng");
+        weatherConditionDescription.put("moderate breeze","gió vừa phải");
+        weatherConditionDescription.put("fresh breeze","gió nhẹ");
+        weatherConditionDescription.put("strong breeze","gió to");
+        weatherConditionDescription.put("high wind, near gale","gió lớn gần cơn bão");
+        weatherConditionDescription.put("gale","cơn lốc");
+        weatherConditionDescription.put("severe gale","cơn bão mạnh");
+        weatherConditionDescription.put("storm","bão");
+        weatherConditionDescription.put("violent storm","cơn bão dữ dội");
     }
 
     private void initComponent(View view) {
@@ -294,6 +325,8 @@ public class NewsFragment extends Fragment implements View.OnClickListener{
         iView2 = (ImageView) view.findViewById(R.id.image_news_2);
         iView3 = (ImageView) view.findViewById(R.id.image_news_3);
         relaytive_thugon = (RelativeLayout) view.findViewById(R.id.relaytive_thugon);
+        relaytive_continues_Home = (RelativeLayout) view.findViewById(R.id.relaytive_continues_Home);
+
         relaytiveContinues.setOnClickListener(this);
         relaytive_thugon.setOnClickListener(this);
         relaytiveNewsBussiness.setOnClickListener(this);
@@ -308,7 +341,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener{
         relaytiveNewsTravel.setOnClickListener(this);
         relaytiveNewsWorld.setOnClickListener(this);
         relaytiveNewsXe.setOnClickListener(this);
-
+        relaytive_continues_Home.setOnClickListener(this);
 
         String city = "Ha Noi, VN";
         JSONWeatherTask task = new JSONWeatherTask();
@@ -327,6 +360,16 @@ public class NewsFragment extends Fragment implements View.OnClickListener{
         Intent in;
         String page_url;
         switch (view.getId()){
+
+            case R.id.relaytive_continues_Home:
+                in = new Intent(getContext(), ListNewsActivity.class);
+
+                // getting page url
+                page_url = "http://vnexpress.net/rss/tin-moi-nhat.rss";
+                in.putExtra("page_url", page_url);
+                in.putExtra("Title", "VnExPressHome");
+                startActivity(in);
+                break;
 
             case R.id.relaytive_news_health:
                  in = new Intent(getContext(), ListNewsActivity.class);
@@ -500,16 +543,21 @@ public class NewsFragment extends Fragment implements View.OnClickListener{
             if (rssItems.size() > 0) {
                 Picasso.with(activity)
                         .load(rssItems.get(0).getDescription())
+                        .resize(220,220)
                         .into(iView1);
                 news1Title.setText(rssItems.get(0).getTitle());
                 //news1Date.setText(rssItems.get(0).getPubdate());
                 Picasso.with(activity)
                         .load(rssItems.get(1).getDescription())
+                        .resize(220,220)
+                        .centerCrop()
                         .into(iView2);
                 news2Title.setText(rssItems.get(1).getTitle());
                 //news2Date.setText(rssItems.get(1).getPubdate());
                 Picasso.with(activity)
                         .load(rssItems.get(2).getDescription())
+                        .resize(220,220)
+                        .centerCrop()
                         .into(iView3);
                 news3Title.setText(rssItems.get(2).getTitle());
                 //news3Date.setText(rssItems.get(2).getPubdate());
@@ -520,6 +568,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener{
                         // getting page url
                         String page_url = rssItems.get(0).getLink();
                         in.putExtra("page_url", page_url);
+                        in.putExtra("Title", "VnExPressHome");
                         startActivity(in);
                     }
                 });
@@ -530,6 +579,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener{
                         // getting page url
                         String page_url = rssItems.get(1).getLink();
                         in.putExtra("page_url", page_url);
+                        in.putExtra("Title", "VnExPressHome");
                         startActivity(in);
                     }
                 });
@@ -540,6 +590,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener{
                         // getting page url
                         String page_url = rssItems.get(2).getLink();
                         in.putExtra("page_url", page_url);
+                        in.putExtra("Title", "VnExPressHome");
                         startActivity(in);
                     }
                 });
@@ -580,7 +631,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener{
                 Log.i("ICON", weather.currentCondition.getIcon() +"");
             }
             txv_locationName.setText(weather.location.getCity() + "," + weather.location.getCountry());
-            txv_description.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");
+            txv_description.setText(weatherCondition.get(weather.currentCondition.getCondition()) + "(" + weatherConditionDescription.get(weather.currentCondition.getDescr()) + ")");
             txv_temp.setText("" + Math.round((weather.temperature.getTemp() - 273.15)) + " độ C");
             txv_humidity.setText(HUMIDITY + "" + weather.currentCondition.getHumidity() + "%");
 //            press.setText("" + weather.currentCondition.getPressure() + " hPa");
