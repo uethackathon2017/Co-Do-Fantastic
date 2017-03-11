@@ -1,13 +1,18 @@
 package com.example.anhdt.smartalarm.services;
 
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.util.Log;
 
+import com.example.anhdt.smartalarm.R;
 import com.example.anhdt.smartalarm.database.Database;
 import com.example.anhdt.smartalarm.models.Alarm;
 import com.example.anhdt.smartalarm.receivers.AlarmServiceBroadcastReciever;
@@ -96,6 +101,7 @@ public class AlarmService extends Service{
         }else{
             Intent myIntent = new Intent(getApplicationContext(), AlarmAlertBroadcastReceiver.class);
             myIntent.putExtra("alarm", new Alarm());
+
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, myIntent,PendingIntent.FLAG_CANCEL_CURRENT);
             AlarmManager alarmManager = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
