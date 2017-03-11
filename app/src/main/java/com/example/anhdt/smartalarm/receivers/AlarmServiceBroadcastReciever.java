@@ -11,7 +11,7 @@ import com.example.anhdt.smartalarm.services.AlarmService;
  * Created by anhdt on 3/11/2017.
  */
 
-public class AlarmAlertBroadcastReciever extends BroadcastReceiver {
+public class AlarmServiceBroadcastReciever extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {

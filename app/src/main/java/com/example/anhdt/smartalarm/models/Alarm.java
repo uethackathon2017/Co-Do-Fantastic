@@ -6,7 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 
-import com.example.anhdt.smartalarm.receivers.AlarmAlertBroadcastReciever;
+import com.example.anhdt.smartalarm.receivers.AlarmAlertBroadcastReceiver;
+import com.example.anhdt.smartalarm.receivers.AlarmServiceBroadcastReciever;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -295,7 +296,7 @@ public class Alarm implements Serializable{
     public void schedule(Context context) {
         setAlarmActive(true);
 
-        Intent myIntent = new Intent(context, AlarmAlertBroadcastReciever.class);
+        Intent myIntent = new Intent(context, AlarmAlertBroadcastReceiver.class);
         myIntent.putExtra("alarm", this);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent,PendingIntent.FLAG_CANCEL_CURRENT);

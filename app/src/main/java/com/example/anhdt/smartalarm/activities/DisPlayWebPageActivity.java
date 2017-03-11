@@ -9,7 +9,7 @@ import android.webkit.WebViewClient;
 
 import com.example.anhdt.smartalarm.R;
 
-public class DisPlayWebPageActivity extends Activity {
+public class DisPlayWebPageActivity extends BaseActivity {
 	
 	WebView webview;
 	

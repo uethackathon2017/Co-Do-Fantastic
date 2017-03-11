@@ -14,7 +14,7 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
  * Created by Admin on 10/03/2017.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private SmartTabLayout tabLayout;
 
