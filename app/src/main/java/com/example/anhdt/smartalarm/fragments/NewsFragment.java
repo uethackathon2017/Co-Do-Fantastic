@@ -37,9 +37,13 @@ import java.util.List;
 public class NewsFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String SPEED = "Tốc độ gió : ";
+    private static final String HUMIDITY = "Đô ẩm : ";
+    private static final String TEMP = " Độ C";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private ProgressDialog pDialog;
+
 
     // Array list for list view
     ArrayList<HashMap<String, String>> rssItemList = new ArrayList<HashMap<String,String>>();
@@ -47,6 +51,11 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
     RSSParser rssParser = new RSSParser();
 
     List<RSSItem> rssItems = new ArrayList<RSSItem>();
+
+    private TextView txv_temp;
+    private TextView txv_humidity;
+    private TextView txv_speed;
+    private TextView txv_description;
 
     private RelativeLayout newsHead;
     private RelativeLayout relaytiveNewsWorld;
@@ -154,6 +163,11 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initComponent(View view) {
+        txv_temp = (TextView) view.findViewById(R.id.txv_temperature);
+        txv_humidity = (TextView) view.findViewById(R.id.txv_humidity);
+        txv_speed = (TextView) view.findViewById(R.id.txv_speed);
+        txv_description = (TextView) view.findViewById(R.id.txv_description);
+
         newsHead = (RelativeLayout) view.findViewById(R.id.news_head);
         relaytiveNewsWorld = (RelativeLayout) view.findViewById(R.id.relaytive_news_world);
         iconNewsWorld = (ImageView) view.findViewById(R.id.icon_news_world);
