@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,7 +29,12 @@ import com.example.anhdt.smartalarm.activities.DisPlayWebPageActivity;
 import com.example.anhdt.smartalarm.adapters.RSSParser;
 import com.example.anhdt.smartalarm.models.RSSFeed;
 import com.example.anhdt.smartalarm.models.RSSItem;
+import com.example.anhdt.smartalarm.models.Weather;
+import com.example.anhdt.smartalarm.utils.JSONWeatherParser;
+import com.example.anhdt.smartalarm.utils.WeatherHttpClient;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,6 +63,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
     private TextView txv_humidity;
     private TextView txv_speed;
     private TextView txv_description;
+    private TextView txv_locationName;
 
     private RelativeLayout newsHead;
     private RelativeLayout relaytiveNewsWorld;
@@ -167,6 +175,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         txv_humidity = (TextView) view.findViewById(R.id.txv_humidity);
         txv_speed = (TextView) view.findViewById(R.id.txv_speed);
         txv_description = (TextView) view.findViewById(R.id.txv_description);
+        txv_locationName = (TextView) view.findViewById(R.id.txv_location_name);
 
         newsHead = (RelativeLayout) view.findViewById(R.id.news_head);
         relaytiveNewsWorld = (RelativeLayout) view.findViewById(R.id.relaytive_news_world);
@@ -236,6 +245,10 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         relaytiveNewsWorld.setOnClickListener(this);
         relaytiveNewsXe.setOnClickListener(this);
 
+
+        String city = "Ha Noi, VN";
+        JSONWeatherTask task = new JSONWeatherTask();
+        task.execute(new String[]{city});
     }
 
     @Override
@@ -382,6 +395,47 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
                     }
                 });
             }
+
+        }
+    }
+    private class JSONWeatherTask extends AsyncTask<String, Void, Weather> {
+
+        @Override
+        protected Weather doInBackground(String... params) {
+            Weather weather = new Weather();
+            String data = ( (new WeatherHttpClient()).getWeatherData(params[0]));
+
+            try {
+                weather = JSONWeatherParser.getWeather(data);
+                // Let's retrieve the icon
+                weather.iconData = ( (new WeatherHttpClient()).getImage(weather.currentCondition.getIcon()));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return weather;
+
+        }
+
+
+
+
+        @Override
+        protected void onPostExecute(Weather weather) {
+            super.onPostExecute(weather);
+
+//            if (weather.iconData != null && weather.iconData.length > 0) {
+//                Bitmap img = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length);
+//                imgView.setImageBitmap(img);
+//            }
+
+            txv_locationName.setText(weather.location.getCity() + "," + weather.location.getCountry());
+            txv_description.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");
+            txv_temp.setText("" + Math.round((weather.temperature.getTemp() - 273.15)) + " độ C");
+            txv_humidity.setText(HUMIDITY + "" + weather.currentCondition.getHumidity() + "%");
+//            press.setText("" + weather.currentCondition.getPressure() + " hPa");
+            txv_speed.setText(SPEED + "" + weather.wind.getSpeed() + " mps");
+//            windDeg.setText("" + weather.wind.getDeg() + "�");
 
         }
     }
