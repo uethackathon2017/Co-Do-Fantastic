@@ -365,7 +365,6 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onClick(View view) {
                         Intent in = new Intent(getContext(), DisPlayWebPageActivity.class);
-
                         // getting page url
                         String page_url = rssItems.get(0).getLink();
                         in.putExtra("page_url", page_url);
@@ -376,7 +375,6 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onClick(View view) {
                         Intent in = new Intent(getContext(), DisPlayWebPageActivity.class);
-
                         // getting page url
                         String page_url = rssItems.get(1).getLink();
                         in.putExtra("page_url", page_url);
@@ -387,7 +385,6 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onClick(View view) {
                         Intent in = new Intent(getContext(), DisPlayWebPageActivity.class);
-
                         // getting page url
                         String page_url = rssItems.get(2).getLink();
                         in.putExtra("page_url", page_url);
@@ -417,9 +414,6 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
 
         }
 
-
-
-
         @Override
         protected void onPostExecute(Weather weather) {
             super.onPostExecute(weather);
@@ -428,7 +422,6 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
 //                Bitmap img = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length);
 //                imgView.setImageBitmap(img);
 //            }
-
             txv_locationName.setText(weather.location.getCity() + "," + weather.location.getCountry());
             txv_description.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");
             txv_temp.setText("" + Math.round((weather.temperature.getTemp() - 273.15)) + " độ C");
