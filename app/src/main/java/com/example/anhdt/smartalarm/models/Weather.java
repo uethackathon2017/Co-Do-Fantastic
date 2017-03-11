@@ -28,7 +28,7 @@ package com.example.anhdt.smartalarm.models;
  */
 public class Weather {
 	
-	public Location location;
+	public Location location = new Location();
 	public CurrentCondition currentCondition = new CurrentCondition();
 	public Temperature temperature = new Temperature();
 	public Wind wind = new Wind();
@@ -43,6 +43,7 @@ public class Weather {
 		private String condition;
 		private String descr;
 		private String icon;
+		private String time;
 		
 		
 		private float pressure;
@@ -84,7 +85,12 @@ public class Weather {
 		public void setHumidity(float humidity) {
 			this.humidity = humidity;
 		}
-		
+		public String getTime(){
+			return time;
+		}
+		public void setTime(String time){
+			this.time = time;
+		}
 		
 	}
 	

@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -27,12 +30,14 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.anhdt.smartalarm.R;
 import com.example.anhdt.smartalarm.activities.DisPlayWebPageActivity;
 import com.example.anhdt.smartalarm.activities.ListNewsActivity;
 import com.example.anhdt.smartalarm.adapters.RSSParser;
+import com.example.anhdt.smartalarm.database.Database;
 import com.example.anhdt.smartalarm.models.RSSFeed;
 import com.example.anhdt.smartalarm.models.RSSItem;
 import com.example.anhdt.smartalarm.models.Weather;
@@ -43,13 +48,17 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 
-public class NewsFragment extends Fragment implements View.OnClickListener{
+public class NewsFragment extends Fragment implements View.OnClickListener , GPSTracker.SettingIntent{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String SPEED = "Tốc độ gió : ";
@@ -60,7 +69,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener{
     private ProgressDialog pDialog;
     private Map<String,String> weatherCondition = new HashMap<String, String>();
     private Map<String,String> weatherConditionDescription = new HashMap<String, String>();
-//    private GPSTracker gpsTracker;
+    private GPSTracker gpsTracker;
 
     // Array list for list view
     ArrayList<HashMap<String, String>> rssItemList = new ArrayList<HashMap<String,String>>();
@@ -75,6 +84,8 @@ public class NewsFragment extends Fragment implements View.OnClickListener{
     private TextView txv_description;
     private TextView txv_locationName;
     private ImageView imv_weather;
+    private ImageView imv_update;
+    private TextView txv_update;
 
     private RelativeLayout newsHead;
     private RelativeLayout relaytiveNewsWorld;
@@ -164,12 +175,14 @@ public class NewsFragment extends Fragment implements View.OnClickListener{
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
+        //gpsTracker = new GPSTracker(getActivity(),getActivity(),this);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        gpsTracker = new GPSTracker(getActivity(),getActivity(),this);
 
         String rss_link = "http://vnexpress.net/rss/tin-moi-nhat.rss";
 
@@ -271,6 +284,8 @@ public class NewsFragment extends Fragment implements View.OnClickListener{
         txv_description = (TextView) view.findViewById(R.id.txv_description);
         txv_locationName = (TextView) view.findViewById(R.id.txv_location_name);
         imv_weather = (ImageView) view.findViewById(R.id.imv_weather);
+        imv_update = (ImageView) view.findViewById(R.id.imv_reload);
+        txv_update = (TextView) view.findViewById(R.id.txv_update);
 
         newsHead = (RelativeLayout) view.findViewById(R.id.news_head);
         relaytiveNewsWorld = (RelativeLayout) view.findViewById(R.id.relaytive_news_world);
@@ -314,13 +329,10 @@ public class NewsFragment extends Fragment implements View.OnClickListener{
         newsFun = (TextView) view.findViewById(R.id.news_fun);
         relaytiveNews1 = (RelativeLayout) view.findViewById(R.id.relaytive_news_1);
         news1Title = (TextView) view.findViewById(R.id.news_1_Title);
-        //news1Date = (TextView) view.findViewById(R.id.news_1_Date);
         relaytiveNews2 = (RelativeLayout) view.findViewById(R.id.relaytive_news_2);
         news2Title = (TextView) view.findViewById(R.id.news_2_Title);
-        //news2Date = (TextView) view.findViewById(R.id.news_2_Date);
         relaytiveNews3 = (RelativeLayout) view.findViewById(R.id.relaytive_news_3);
         news3Title = (TextView) view.findViewById(R.id.news_3_Title);
-        //news3Date = (TextView) view.findViewById(R.id.news_3_Date);
         iView1 = (ImageView) view.findViewById(R.id.image_news_1);
         iView2 = (ImageView) view.findViewById(R.id.image_news_2);
         iView3 = (ImageView) view.findViewById(R.id.image_news_3);
@@ -342,10 +354,39 @@ public class NewsFragment extends Fragment implements View.OnClickListener{
         relaytiveNewsWorld.setOnClickListener(this);
         relaytiveNewsXe.setOnClickListener(this);
         relaytive_continues_Home.setOnClickListener(this);
+        imv_update.setOnClickListener(this);
 
-        String city = "Ha Noi, VN";
-        JSONWeatherTask task = new JSONWeatherTask();
-        task.execute(new String[]{city});
+
+        if(isNetworkConnected()){
+            String city = "Ha Noi, VN";
+            JSONWeatherTask task = new JSONWeatherTask();
+            task.execute(new String[]{city});
+        }
+        else {
+            Database.init(getActivity());
+            Weather weather1 = Database.getWeather();
+            if(weather1!=null){
+                if (weather1.currentCondition.getIcon() != null) {
+                    Picasso.with(getActivity())
+                            .load("http://openweathermap.org/img/w/" + weather1.currentCondition.getIcon() + ".png")
+                            .into(imv_weather);
+                }
+                txv_locationName.setText(weather1.location.getCity() + "," + weather1.location.getCountry());
+                txv_description.setText(weatherCondition.get(weather1.currentCondition.getCondition()) + "(" + weatherConditionDescription.get(weather1.currentCondition.getDescr()) + ")");
+                txv_temp.setText("" + Math.round((weather1.temperature.getTemp() - 273.15)) + " độ C");
+                txv_humidity.setText(HUMIDITY + "" + weather1.currentCondition.getHumidity() + "%");
+                txv_speed.setText(SPEED + "" + weather1.wind.getSpeed() + " mps");
+                txv_update.setText("Cập nhật lúc : " + weather1.currentCondition.getTime());
+            }
+            Toast.makeText(getActivity(),"Kiểm tra kết nối Internet của bạn",Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null;
     }
 
     @Override
@@ -360,6 +401,50 @@ public class NewsFragment extends Fragment implements View.OnClickListener{
         Intent in;
         String page_url;
         switch (view.getId()){
+            case R.id.imv_reload:
+//                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+//
+//                } else {
+
+                    gpsTracker = new GPSTracker(getActivity(), getActivity(), this);
+
+                    // Check if GPS enabled
+                    if (gpsTracker.canGetLocation()) {
+
+//                        double latitude = gpsTracker.getLatitude();
+//                        double longitude = gpsTracker.getLongitude();
+//
+//
+//                        Log.i("TOADO", latitude + " " + longitude);
+//                        Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
+//                        List<Address> addresses = null;
+//                        try {
+//                            addresses = gcd.getFromLocation(latitude, longitude, 1);
+//                            if (addresses.size() > 0)
+//                            {
+//                                System.out.println(addresses.get(0).getLocality());
+//                                Log.i("place",addresses.get(0).getLocality());
+//                                JSONWeatherTask task = new JSONWeatherTask();
+//                                task.execute(new String[]{addresses.get(0).getLocality()});
+//                            }
+//                            else
+//                            {
+//                                // do your staff
+//                            }
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+                        String city = "Ha Noi, VN";
+                        JSONWeatherTask task = new JSONWeatherTask();
+                        task.execute(new String[]{city});
+
+                    } else {
+                        gpsTracker.showSettingsAlert();
+                    }
+                //}
+
+                break;
 
             case R.id.relaytive_continues_Home:
                 in = new Intent(getContext(), ListNewsActivity.class);
@@ -622,55 +707,124 @@ public class NewsFragment extends Fragment implements View.OnClickListener{
         protected void onPostExecute(Weather weather) {
             super.onPostExecute(weather);
 
-            if (weather.currentCondition.getIcon() != null) {
-                //Bitmap img = BitmapFactory.decodeByteArray(weather.currentCondition.getIcon(), 0, weather.iconData.length);
-                //imv_weather.setImageBitmap(img);
-                Picasso.with(getActivity())
-                        .load("http://openweathermap.org/img/w/" + weather.currentCondition.getIcon() + ".png")
-                        .into(imv_weather);
-                Log.i("ICON", weather.currentCondition.getIcon() +"");
+            if (gpsTracker.canGetLocation() == false) {
+
+                Database.init(getActivity());
+                Weather weather1 = Database.getWeather();
+                Log.i("Chan qua", "@@");
+                if(weather1!=null){
+                    if (weather1.currentCondition.getIcon() != null) {
+                        Picasso.with(getActivity())
+                                .load("http://openweathermap.org/img/w/" + weather1.currentCondition.getIcon() + ".png")
+                                .into(imv_weather);
+                        Log.i("ICON", weather.currentCondition.getIcon() +"");
+                    }
+                    txv_locationName.setText(weather1.location.getCity() + "," + weather1.location.getCountry());
+                    txv_description.setText(weatherCondition.get(weather1.currentCondition.getCondition()) + "(" + weatherConditionDescription.get(weather1.currentCondition.getDescr()) + ")");
+                    txv_temp.setText("" + Math.round((weather1.temperature.getTemp() - 273.15)) + " độ C");
+                    txv_humidity.setText(HUMIDITY + "" + weather1.currentCondition.getHumidity() + "%");
+                    txv_speed.setText(SPEED + "" + weather1.wind.getSpeed() + " mps");
+                    txv_update.setText("Cập nhật lúc : " + weather1.currentCondition.getTime());
+                    Log.i("database" , weather1.location.getCity());
+                    Log.i("Time_database" , weather1.currentCondition.getTime());
+                }
             }
-            txv_locationName.setText(weather.location.getCity() + "," + weather.location.getCountry());
-            txv_description.setText(weatherCondition.get(weather.currentCondition.getCondition()) + "(" + weatherConditionDescription.get(weather.currentCondition.getDescr()) + ")");
-            txv_temp.setText("" + Math.round((weather.temperature.getTemp() - 273.15)) + " độ C");
-            txv_humidity.setText(HUMIDITY + "" + weather.currentCondition.getHumidity() + "%");
+            else {
+                Log.i("Haiz", "@@");
+                if (weather.currentCondition.getIcon() != null) {
+                    //Bitmap img = BitmapFactory.decodeByteArray(weather.currentCondition.getIcon(), 0, weather.iconData.length);
+                    //imv_weather.setImageBitmap(img);
+                    Picasso.with(getActivity())
+                            .load("http://openweathermap.org/img/w/" + weather.currentCondition.getIcon() + ".png")
+                            .into(imv_weather);
+                    Log.i("ICON", weather.currentCondition.getIcon() +"");
+                }
+                txv_locationName.setText(weather.location.getCity() + "," + weather.location.getCountry());
+                txv_description.setText(weatherCondition.get(weather.currentCondition.getCondition()) + "(" + weatherConditionDescription.get(weather.currentCondition.getDescr()) + ")");
+                txv_temp.setText("" + Math.round((weather.temperature.getTemp() - 273.15)) + " độ C");
+                txv_humidity.setText(HUMIDITY + "" + weather.currentCondition.getHumidity() + "%");
 //            press.setText("" + weather.currentCondition.getPressure() + " hPa");
-            txv_speed.setText(SPEED + "" + weather.wind.getSpeed() + " mps");
+                txv_speed.setText(SPEED + "" + weather.wind.getSpeed() + " mps");
 //            windDeg.setText("" + weather.wind.getDeg() + "�");
 
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+                weather.currentCondition.setTime(sdf.format(c.getTime()));
+
+                txv_update.setText("Cập nhật lúc : " + sdf.format(c.getTime()));
+
+                //weather.currentCondition.setTime("12:00");
+                Log.i("Time",weather.currentCondition.getTime());
+                Database.init(getActivity());
+                Weather weather1 = Database.getWeather();
+                if(weather1 == null){
+                    Log.i("create","@@");
+                    Database.createWeather(weather);
+                }
+                else {
+                    Log.i("update","@@");
+                    Database.updateWeather(weather);
+                }
+            }
         }
     }
 
-//    @Override
-//    public void setOnShowSettingIntent() {
-//        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-//    }
-//
-//    private void getLatLong() {
-//
-//        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-//
-//        } else {
-//            gpsTracker = new GPSTracker(getActivity(), getActivity(), this);
-//
-//            // Check if GPS enabled
-//            if (gpsTracker.canGetLocation()) {
-//
-//                double latitude = gpsTracker.getLatitude();
-//                double longitude = gpsTracker.getLongitude();
-//            } else {
-//                // Can't get location.
-//                // GPS or network is not enabled.
-//                // Ask user to enable GPS/network in settings.
-//                gpsTracker.showSettingsAlert();
-//            }
-//        }
-//    }
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        getLatLong();
-//    }
+    @Override
+    public void setOnShowSettingIntent() {
+        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+    }
+
+    private void checkPermission() {
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+
+                    // contacts-related task you need to do.
+
+                    gpsTracker = new GPSTracker(getActivity(), getActivity(), this);
+
+                    // Check if GPS enabled
+                    if (gpsTracker.canGetLocation()) {
+
+                        double latitude = gpsTracker.getLatitude();
+                        double longitude = gpsTracker.getLongitude();
+
+
+                    } else {
+                        // Can't get location.
+                        // GPS or network is not enabled.
+                        // Ask user to enable GPS/network in settings.
+                        gpsTracker.showSettingsAlert();
+                    }
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(getActivity(), "You need to grant permission", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkPermission();
+    }
 }
