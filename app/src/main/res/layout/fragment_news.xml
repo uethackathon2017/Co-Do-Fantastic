@@ -1,13 +1,508 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.anhdt.smartalarm.fragments.NewsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/news_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="#26ffffff">
+            <RelativeLayout
+                android:id="@+id/relaytive_news_world"
+                android:layout_margin="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/icon_news_world"
+                    android:layout_width="80sp"
+                    android:layout_height="80sp"
+                    android:background="@drawable/border_circle"
+                    android:src="@drawable/the_gioi"
+                    />
+                <TextView
+                    android:id="@+id/news_world"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thế giới"
+                    android:textColor="@android:color/white"
+                    android:layout_below="@id/icon_news_world"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relaytive_news_events"
+                android:layout_width="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true">
+                <ImageView
+                    android:id="@+id/icon_news_events"
+                    android:layout_width="80sp"
+                    android:layout_height="80sp"
+                    android:background="@drawable/border_circle"
+                    android:src="@drawable/thoi_su"
+                    />
+                <TextView
+                    android:id="@+id/news_events"
+                    android:textColor="@android:color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thời sự"
+                    android:layout_below="@id/icon_news_events"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relaytive_news_health"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="15dp"
+                >
+                <ImageView
+                    android:id="@+id/icon_news_health"
+                    android:layout_width="80sp"
+                    android:layout_height="80sp"
+                    android:background="@drawable/border_circle"
+                    android:src="@drawable/suc_khoe"
+                    />
+                <TextView
+                    android:id="@+id/news_health"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sức khỏe"
+                    android:textColor="@android:color/white"
+                    android:layout_below="@id/icon_news_health"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relaytive_news_laws"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/relaytive_news_entertain"
+                android:layout_alignStart="@+id/relaytive_news_world">
+                <ImageView
+                    android:id="@+id/icon_news_laws"
+                    android:layout_width="80sp"
+                    android:layout_height="80sp"
+                    android:background="@drawable/border_circle"
+                    android:src="@drawable/luat"
+                    />
+                <TextView
+                    android:id="@+id/news_laws"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Luật"
+                    android:textColor="@android:color/white"
+                    android:layout_below="@id/icon_news_laws"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relaytive_news_entertain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/relaytive_news_world">
+                <ImageView
+                    android:id="@+id/icon_news_entertain"
+                    android:layout_width="80sp"
+                    android:layout_height="80sp"
+                    android:background="@drawable/border_circle"
+                    android:src="@drawable/giai_tri"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+                <TextView
+                    android:id="@+id/news_entertain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Giải trí"
+                    android:textColor="@android:color/white"
+                    android:layout_below="@id/icon_news_entertain"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relaytive_news_sports"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_alignTop="@+id/relaytive_news_entertain"
+                android:layout_alignStart="@+id/relaytive_news_health">
+                <ImageView
+                    android:id="@+id/icon_news_sports"
+                    android:layout_width="80sp"
+                    android:layout_height="80sp"
+                    android:background="@drawable/border_circle"
+                    android:src="@drawable/the_thao"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+                <TextView
+                    android:id="@+id/news_sports"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thể thao"
+                    android:textColor="@android:color/white"
+                    android:layout_below="@id/icon_news_sports"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relaytive_continues"
+            android:layout_below="@id/news_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="#26ffffff">
+            <TextView
+                android:id="@+id/tv_continues"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xem thêm ..."
+                android:textSize="18sp"
+                android:layout_margin="10dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@android:color/white"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relaytive_head_2"
+            android:layout_below="@id/relaytive_continues"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:visibility="gone"
+            android:background="#26ffffff"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/relaytive_news_education"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_centerHorizontal="true"
+                >
+                <ImageView
+                    android:id="@+id/icon_news_education"
+                    android:layout_width="80sp"
+                    android:layout_height="80sp"
+                    android:background="@drawable/border_circle"
+                    android:src="@drawable/giao_duc"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+                <TextView
+                    android:id="@+id/news_education"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Giáo dục"
+                    android:textColor="@android:color/white"
+                    android:layout_below="@id/icon_news_education"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relaytive_news_science"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/relaytive_news_education"
+                >
+                <ImageView
+                    android:id="@+id/icon_news_science"
+                    android:layout_width="80sp"
+                    android:layout_height="80sp"
+                    android:background="@drawable/border_circle"
+                    android:src="@drawable/khoa_hoc"
+                    />
+                <TextView
+                    android:id="@+id/news_science"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Khoa học"
+                    android:textColor="@android:color/white"
+                    android:layout_below="@id/icon_news_science"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relaytive_news_bussiness"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_alignTop="@+id/relaytive_news_education"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="18dp">
+                <ImageView
+                    android:id="@+id/icon_news_bussiness"
+                    android:layout_width="80sp"
+                    android:layout_height="80sp"
+                    android:background="@drawable/border_circle"
+                    android:src="@drawable/kinh_doanh"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+                <TextView
+                    android:id="@+id/news_bussiness"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kinh doanh"
+                    android:textColor="@android:color/white"
+                    android:layout_below="@id/icon_news_bussiness"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relaytive_news_xe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/relaytive_news_education">
+                <ImageView
+                    android:id="@+id/icon_news_xe"
+                    android:layout_width="80sp"
+                    android:layout_height="80sp"
+                    android:background="@drawable/border_circle"
+                    android:src="@drawable/xe"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+                <TextView
+                    android:id="@+id/news_xe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Xe"
+                    android:textColor="@android:color/white"
+                    android:layout_below="@id/icon_news_xe"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relaytive_news_travel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/relaytive_news_xe"
+                android:layout_alignStart="@+id/relaytive_news_science">
+                <ImageView
+                    android:id="@+id/icon_news_travel"
+                    android:layout_width="80sp"
+                    android:layout_height="80sp"
+                    android:background="@drawable/border_circle"
+                    android:src="@drawable/du_lich"
+                    />
+                <TextView
+                    android:id="@+id/news_travel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Khoa học"
+                    android:textColor="@android:color/white"
+                    android:layout_below="@id/icon_news_travel"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relaytive_news_fun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_alignTop="@+id/relaytive_news_xe"
+                android:layout_alignStart="@+id/relaytive_news_bussiness">
+                <ImageView
+                    android:id="@+id/icon_news_fun"
+                    android:layout_width="80sp"
+                    android:layout_height="80sp"
+                    android:background="@drawable/border_circle"
+                    android:src="@drawable/cuoi"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+                <TextView
+                    android:id="@+id/news_fun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kinh doanh"
+                    android:textColor="@android:color/white"
+                    android:layout_below="@id/icon_news_fun"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relaytive_thugon"
+            android:layout_below="@id/relaytive_head_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_margin="3dp"
+            android:background="#26ffffff">
+            <TextView
+                android:id="@+id/tv_thugon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thu nhỏ"
+                android:textSize="18sp"
+                android:layout_margin="10dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@android:color/white"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relaytive_news"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:background="#26ffffff"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/relaytive_thugon"
+            >
+            <RelativeLayout
+                android:id="@+id/relaytive_news_1"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_margin="6dp"
+                android:layout_centerHorizontal="true"
+                android:background="#90CAF9"
+                >
+                <TextView
+                    android:id="@+id/news_title_1"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="7dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tin tức nổi bật"
+                    android:textColor="@android:color/white"/>
+                <ImageView
+                    android:layout_below="@id/news_title_1"
+                    android:id="@+id/image_news_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/news_1_Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="Giáo dục"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:layout_centerVertical="true"/>
+                <TextView
+                    android:id="@+id/news_1_Date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="11/03/2017"
+                    android:layout_below="@id/news_1_Title"
+                    android:textColor="@android:color/holo_red_light"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/relaytive_news_2"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_margin="6dp"
+                android:layout_marginBottom="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/relaytive_news_1"
+                android:background="#B39DDB"
+                >
+                <TextView
+                    android:id="@+id/news_title_2"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="7dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tin tức nổi bật"
+                    android:textColor="@android:color/white"/>
+                <ImageView
+                    android:layout_below="@id/news_title_2"
+                    android:id="@+id/image_news_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/news_2_Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="Giáo dục"
+
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:layout_centerVertical="true"/>
+                <TextView
+                    android:id="@+id/news_2_Date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="11/03/2017"
+                    android:layout_below="@id/news_2_Title"
+                    android:textColor="@android:color/holo_red_light"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/relaytive_news_3"
+                android:layout_width="match_parent"
+                android:layout_below="@id/relaytive_news_2"
+                android:background="#9CCC65"
+                android:layout_height="120dp"
+                android:layout_margin="6dp"
+                android:layout_centerHorizontal="true"
+                >
+                <TextView
+                    android:id="@+id/news_title_3"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="7dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tin tức nổi bật"
+                    android:textColor="@android:color/white"/>
+                <ImageView
+                    android:layout_below="@id/news_title_3"
+                    android:id="@+id/image_news_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/news_3_Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="Giáo dục"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"                    android:layout_centerVertical="true"/>
+                <TextView
+                    android:id="@+id/news_3_Date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="11/03/2017"
+                    android:layout_below="@id/news_3_Title"
+                    android:textColor="@android:color/holo_red_light"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+
+
+
+</ScrollView>
