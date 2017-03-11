@@ -5,8 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.anhdt.smartalarm.models.Alarm;
+import com.example.anhdt.smartalarm.models.Weather;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -14,6 +16,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +30,9 @@ public class Database extends SQLiteOpenHelper{
     static SQLiteDatabase database = null;
 
     static final String DATABASE_NAME = "DB";
-    static final int DATABASE_VERSION = 2;
+
+    static final int DATABASE_VERSION = 3;
+
 
     public static final String ALARM_TABLE = "alarm";
     public static final String COLUMN_ALARM_ID = "_id";
@@ -39,6 +44,18 @@ public class Database extends SQLiteOpenHelper{
     public static final String COLUMN_ALARM_TONE = "alarm_tone";
     public static final String COLUMN_ALARM_VIBRATE = "alarm_vibrate";
     public static final String COLUMN_ALARM_NAME = "alarm_name";
+
+    public static final String WEATHER_TABLE = "weather";
+    public static final String COLUMN_WEATHER_ID = "_idWeather";
+    public static final String COLUMN_CITY = "_city";
+    public static final String COLUMN_COUNTRY = "country";
+    public static final String COLUMN_ICON = "icon";
+    public static final String COLUMN_TEAMPRATURE = "temprature";
+    public static final String COLUMN_CONDITION = "condition";
+    public static final String COLUMN_DESCRIPTION = "description";
+    public static final String COLUMN_HUMIDITY = "humidity";
+    public static final String COLUMN_SPEEDWIND = "speedwind";
+    public static final String COLUMN_TIMEUPDATE = "timeupdate";
 
     public static void init(Context context) {
         if (null == instance) {
@@ -86,6 +103,40 @@ public class Database extends SQLiteOpenHelper{
 
         return getDatabase().insert(ALARM_TABLE, null, cv);
     }
+
+    public static long createWeather(Weather weather){
+        ContentValues cv = new ContentValues();
+
+        cv.put(COLUMN_CITY , weather.location.getCity());
+        cv.put(COLUMN_COUNTRY , weather.location.getCountry());
+        cv.put(COLUMN_ICON ,weather.currentCondition.getIcon());
+        cv.put(COLUMN_TEAMPRATURE, weather.temperature.getTemp());
+        cv.put(COLUMN_CONDITION, weather.currentCondition.getCondition());
+        cv.put(COLUMN_DESCRIPTION , weather.currentCondition.getDescr());
+        cv.put(COLUMN_HUMIDITY, weather.currentCondition.getHumidity());
+        cv.put(COLUMN_SPEEDWIND,weather.wind.getSpeed());
+        cv.put(COLUMN_TIMEUPDATE, weather.currentCondition.getTime());
+
+
+        return getDatabase().insert(WEATHER_TABLE, null, cv);
+    }
+
+    public static int updateWeather(Weather weather){
+        ContentValues cv = new ContentValues();
+
+        cv.put(COLUMN_CITY , weather.location.getCity());
+        cv.put(COLUMN_COUNTRY , weather.location.getCountry());
+        cv.put(COLUMN_ICON ,weather.currentCondition.getIcon());
+        cv.put(COLUMN_TEAMPRATURE, weather.temperature.getTemp());
+        cv.put(COLUMN_CONDITION, weather.currentCondition.getCondition());
+        cv.put(COLUMN_DESCRIPTION , weather.currentCondition.getDescr());
+        cv.put(COLUMN_HUMIDITY, weather.currentCondition.getHumidity());
+        cv.put(COLUMN_SPEEDWIND,weather.wind.getSpeed());
+        cv.put(COLUMN_TIMEUPDATE, weather.currentCondition.getTime());
+
+        return getDatabase().update(WEATHER_TABLE, cv, "_idWeather=" + 1, null);
+    }
+
     public static int update(Alarm alarm) {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_ALARM_ACTIVE, alarm.getAlarmActive());
@@ -174,6 +225,46 @@ public class Database extends SQLiteOpenHelper{
         return alarm;
     }
 
+    public static Weather getWeather(){
+        // TODO Auto-generated method stub
+        String[] columns = new String[] {
+                COLUMN_WEATHER_ID,
+                COLUMN_CITY,
+                COLUMN_COUNTRY,
+                COLUMN_ICON,
+                COLUMN_TEAMPRATURE,
+                COLUMN_CONDITION,
+                COLUMN_DESCRIPTION,
+                COLUMN_HUMIDITY,
+                COLUMN_SPEEDWIND,
+                COLUMN_TIMEUPDATE
+        };
+        Cursor c = getDatabase().query(WEATHER_TABLE, columns, null, null, null, null,
+                null);
+        if(c.getCount() == 0){
+            Weather weather = null;
+            return weather;
+        }
+        Log.i("COUNT",c.getCount()+"");
+        Weather weather = null;
+
+        if(c.moveToFirst()){
+
+            weather =  new Weather();
+            weather.location.setCity(c.getString(1));
+            weather.location.setCountry(c.getString(2));
+            weather.currentCondition.setIcon(c.getString(3));
+            weather.temperature.setTemp(c.getFloat(4));
+            weather.currentCondition.setCondition(c.getString(5));
+            weather.currentCondition.setDescr(c.getString(6));
+            weather.currentCondition.setHumidity(c.getFloat(7));
+            weather.wind.setSpeed(c.getFloat(8));
+            weather.currentCondition.setTime(c.getString(9));
+        }
+        c.close();
+        return weather;
+    }
+
     public static Cursor getCursor() {
         // TODO Auto-generated method stub
         String[] columns = new String[] {
@@ -208,6 +299,20 @@ public class Database extends SQLiteOpenHelper{
                 + COLUMN_ALARM_TONE + " TEXT NOT NULL, "
                 + COLUMN_ALARM_VIBRATE + " INTEGER NOT NULL, "
                 + COLUMN_ALARM_NAME + " TEXT NOT NULL)");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + WEATHER_TABLE + " ( "
+                + COLUMN_WEATHER_ID + " INTEGER primary key autoincrement, "
+                + COLUMN_CITY + " TEXT NOT NULL, "
+                + COLUMN_COUNTRY + " TEXT NOT NULL, "
+                + COLUMN_ICON + " TEXT NOT NULL, "
+                + COLUMN_TEAMPRATURE + " FLOAT NOT NULL, "
+                + COLUMN_CONDITION + " TEXT NOT NULL, "
+                + COLUMN_DESCRIPTION + " TEXT NOT NULL, "
+                + COLUMN_HUMIDITY + " FLOAT NOT NULL, "
+                + COLUMN_SPEEDWIND + " FLOAT NOT NULL, "
+                + COLUMN_TIMEUPDATE + " TEXT NOT NULL)"
+        );
+
     }
 
     @Override
