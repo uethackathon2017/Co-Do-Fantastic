@@ -1,13 +1,76 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:weightSum="7"
+    android:orientation="vertical"
+    android:background="@mipmap/background_application"
     tools:context="com.example.anhdt.smartalarm.fragments.WeatherFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_weight="1.5"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_height="0dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@mipmap/gps_receiving_32"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:textSize="18sp"
+            android:id="@+id/txv_location_name"
+            android:textColor="@android:color/white"
+            android:text="Hà Nội"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="3.5"
+        android:weightSum="4"
+        android:orientation="vertical"
+        android:layout_height="0dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1.5"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_height="0dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@mipmap/snow_64"
+                android:id="@+id/imv_weather"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:textSize="26sp"
+                android:id="@+id/txv_temperature"
+                android:textColor="@android:color/white"
+                android:text="20 độ C"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Có sương"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Độ ẩm : "
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+</LinearLayout>
