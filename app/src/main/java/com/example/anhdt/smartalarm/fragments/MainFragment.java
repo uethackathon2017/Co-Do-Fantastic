@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.anhdt.smartalarm.R;
+import com.example.anhdt.smartalarm.activities.MainActivity;
 import com.example.anhdt.smartalarm.activities.SetAlarmActivity;
 import com.example.anhdt.smartalarm.adapters.AlarmAdapter;
 import com.example.anhdt.smartalarm.database.Database;
@@ -49,6 +50,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         alarms = new ArrayList<>();
         alarmAdapter = new AlarmAdapter(alarms, activity);
+        ((MainActivity) activity).callMathAlarmScheduleService();
         updateAlarmList();
     }
 

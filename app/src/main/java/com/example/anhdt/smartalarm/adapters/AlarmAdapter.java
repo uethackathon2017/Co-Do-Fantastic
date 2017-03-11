@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.anhdt.smartalarm.R;
+import com.example.anhdt.smartalarm.activities.BaseActivity;
+import com.example.anhdt.smartalarm.activities.MainActivity;
 import com.example.anhdt.smartalarm.activities.SetAlarmActivity;
 import com.example.anhdt.smartalarm.database.Database;
 import com.example.anhdt.smartalarm.models.Alarm;
@@ -69,7 +71,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
                 Alarm alarm1 = alarms.get(position);
                 alarm1.setAlarmActive(holder.imgSetAlarm.isSelected());
                 Database.update(alarm1);
-                //AlarmActivity.this.callMathAlarmScheduleService();
+                ((MainActivity) context).callMathAlarmScheduleService();
 //                if (checkBox.isChecked()) {
 //                    Toast.makeText(AlarmActivity.this, alarm.getTimeUntilNextAlarmMessage(), Toast.LENGTH_LONG).show();
 //                }
@@ -123,7 +125,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
 
                     Database.init(context);
                     Database.deleteEntry(alarms.get(getAdapterPosition()));
-                    //context.callMathAlarmScheduleService();
+                    ((MainActivity) context).callMathAlarmScheduleService();
 //                    position = getAdapterPosition();
 //                    alarms.remove(position);
                     updateAlarmList();

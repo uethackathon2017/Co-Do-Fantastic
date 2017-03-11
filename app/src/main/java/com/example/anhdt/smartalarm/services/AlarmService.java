@@ -10,7 +10,8 @@ import android.util.Log;
 
 import com.example.anhdt.smartalarm.database.Database;
 import com.example.anhdt.smartalarm.models.Alarm;
-import com.example.anhdt.smartalarm.receivers.AlarmAlertBroadcastReciever;
+import com.example.anhdt.smartalarm.receivers.AlarmServiceBroadcastReciever;
+import com.example.anhdt.smartalarm.receivers.AlarmAlertBroadcastReceiver;
 
 import java.util.Comparator;
 import java.util.List;
@@ -93,7 +94,7 @@ public class AlarmService extends Service{
             Log.d(this.getClass().getSimpleName(),alarm.getTimeUntilNextAlarmMessage());
 
         }else{
-            Intent myIntent = new Intent(getApplicationContext(), AlarmAlertBroadcastReciever.class);
+            Intent myIntent = new Intent(getApplicationContext(), AlarmAlertBroadcastReceiver.class);
             myIntent.putExtra("alarm", new Alarm());
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, myIntent,PendingIntent.FLAG_CANCEL_CURRENT);

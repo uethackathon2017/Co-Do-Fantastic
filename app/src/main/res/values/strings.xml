@@ -6,4 +6,5 @@
     <string name="alarm">Đặt báo thức</string>
     <string name="weather">Thời tiết</string>
     <string name="news">Tin tức</string>
+    <string name="location_name">Hà Nội</string>
 </resources>
