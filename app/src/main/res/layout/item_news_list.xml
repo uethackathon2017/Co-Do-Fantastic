@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#ffffff">
+    
+    <!-- Header -->
+    <RelativeLayout
+        android:id="@+id/header"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_back"
+            android:layout_margin="7dp"
+            />
+        <TextView
+            android:id="@+id/title_Page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thời Trang"
+            android:textSize="25dp"
+            android:textColor="@android:color/black"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+ 
+    <ListView
+        android:id="@android:id/list"
+        android:layout_below="@id/header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:divider="#bababa"
+        android:dividerHeight="1dp"
+        android:background="#ffffff" 
+        android:cacheColorHint="#00000000"/>
+ 
+</RelativeLayout>
