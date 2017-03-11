@@ -38,4 +38,5 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     compile 'com.github.lzyzsd:circleprogress:1.2.1'
     testCompile 'junit:junit:4.12'
+    compile 'com.microsoft.projectoxford:vision:1.0.374'
 }

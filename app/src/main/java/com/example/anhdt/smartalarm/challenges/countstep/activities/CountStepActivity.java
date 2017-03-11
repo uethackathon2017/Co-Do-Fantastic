@@ -1,4 +1,4 @@
-package com.example.anhdt.smartalarm.countstep.activities;
+package com.example.anhdt.smartalarm.challenges.countstep.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,10 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.anhdt.smartalarm.R;
-import com.example.anhdt.smartalarm.countstep.accelerometer.AccelerometerDetector;
-import com.example.anhdt.smartalarm.countstep.accelerometer.AccelerometerProcessing;
-import com.example.anhdt.smartalarm.countstep.accelerometer.OnStepCountChangeListener;
-import com.example.anhdt.smartalarm.countstep.dialogs.MyDialogEndTime;
+import com.example.anhdt.smartalarm.challenges.countstep.accelerometer.AccelerometerDetector;
+import com.example.anhdt.smartalarm.challenges.countstep.accelerometer.AccelerometerProcessing;
+import com.example.anhdt.smartalarm.challenges.countstep.accelerometer.OnStepCountChangeListener;
+import com.example.anhdt.smartalarm.challenges.countstep.dialogs.MyDialogEndTime;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 
 import java.util.Locale;
