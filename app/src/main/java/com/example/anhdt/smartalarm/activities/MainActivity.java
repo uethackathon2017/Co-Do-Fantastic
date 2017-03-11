@@ -26,7 +26,7 @@ public class MainActivity extends BaseActivity {
         tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
         tabLayout.setBackgroundColor(Color.TRANSPARENT);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), 2);
+        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), 2,this);
 
         viewPager.setAdapter(adapter);
         tabLayout.setViewPager(viewPager);

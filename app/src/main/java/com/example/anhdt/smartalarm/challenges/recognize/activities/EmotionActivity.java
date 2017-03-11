@@ -1,5 +1,6 @@
 package com.example.anhdt.smartalarm.challenges.recognize.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -8,6 +9,8 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,8 +20,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.anhdt.smartalarm.R;
+import com.example.anhdt.smartalarm.activities.ListNewsActivity;
 import com.example.anhdt.smartalarm.challenges.recognize.helper.ImageHelper;
 import com.google.gson.Gson;
 import com.microsoft.projectoxford.emotion.EmotionServiceClient;
@@ -31,6 +36,7 @@ import com.microsoft.projectoxford.face.contract.Face;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -38,10 +44,11 @@ public class EmotionActivity extends AppCompatActivity {
 
     // Flag to indicate which task is to be performed.
     private static final int REQUEST_SELECT_IMAGE = 0;
-
+    private static final int REQUEST_SELECT_IMAGE_IN_ALBUM = 1;
+    private ProgressDialog pDialog;
     // The button to select an image
-    private Button mButtonSelectImage;
-
+    private ImageView mButtonSelectImage;
+    private TextView textViewSelectImage;
     // The URI of the image selected to detect.
     private Uri mImageUri;
 
@@ -61,8 +68,8 @@ public class EmotionActivity extends AppCompatActivity {
         if (client == null) {
             client = new EmotionServiceRestClient(getString(R.string.subscription_key));
         }
-
-        mButtonSelectImage = (Button) findViewById(R.id.buttonSelectImage);
+        textViewSelectImage = (TextView) findViewById(R.id.tvSelectImage);
+        mButtonSelectImage = (ImageView) findViewById(R.id.selectedImage);
         mEditText = (EditText) findViewById(R.id.editTextResult);
     }
 
@@ -92,10 +99,21 @@ public class EmotionActivity extends AppCompatActivity {
     // Called when the "Select Image" button is clicked.
     public void selectImage(View view) {
         mEditText.setText("");
-
-        Intent intent;
-        intent = new Intent(EmotionActivity.this, SelectImageActivity.class);
-        startActivityForResult(intent, REQUEST_SELECT_IMAGE);
+        textViewSelectImage.setVisibility(View.GONE);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(intent.resolveActivity(getPackageManager()) != null) {
+            // Save the photo taken to a temporary file.
+            File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            try {
+                File file = File.createTempFile("IMG_", ".jpg", storageDir);
+                mImageUri = Uri.fromFile(file);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+                startActivityForResult(intent, REQUEST_SELECT_IMAGE);
+                Log.v("abc",mImageUri.toString());
+            } catch (IOException e) {
+                Log.v("abc",e.getMessage());
+            }
+        }
     }
 
     // Called when image selection is done.
@@ -106,7 +124,6 @@ public class EmotionActivity extends AppCompatActivity {
             case REQUEST_SELECT_IMAGE:
                 if (resultCode == RESULT_OK) {
                     // If image is selected successfully, set the image URI and bitmap.
-                    mImageUri = data.getData();
 
                     mBitmap = ImageHelper.loadSizeLimitedBitmapFromUri(
                             mImageUri, getContentResolver());
@@ -128,7 +145,13 @@ public class EmotionActivity extends AppCompatActivity {
         }
     }
 
-
+    public void selectImageInAlbum(View view) {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, REQUEST_SELECT_IMAGE_IN_ALBUM);
+        }
+    }
     private List<RecognizeResult> processWithAutoFaceDetection() throws EmotionServiceException, IOException {
         Log.d("emotion", "Start emotion detection with auto-face detection");
 
@@ -216,6 +239,8 @@ public class EmotionActivity extends AppCompatActivity {
         public doRequest(boolean useFaceRectangles) {
             this.useFaceRectangles = useFaceRectangles;
         }
+
+
 
         @Override
         protected List<RecognizeResult> doInBackground(String... args) {

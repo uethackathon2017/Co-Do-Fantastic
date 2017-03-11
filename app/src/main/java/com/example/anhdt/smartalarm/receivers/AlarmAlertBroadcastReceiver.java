@@ -51,11 +51,6 @@ public class AlarmAlertBroadcastReceiver extends BroadcastReceiver {
                 context.startActivity(countStepAlarmAlertActivityIntent);
             }
         }
-
-
-
-
-
     }
 
 }
