@@ -103,7 +103,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
     private RelativeLayout relaytiveNewsTravel;
     private ImageView iconNewsTravel;
     private TextView newsTravel;
-    private RelativeLayout relaytiveNewsFun;
+    private RelativeLayout relaytiveNewsFun,relaytive_continues_Home;
     private ImageView iconNewsFun;
     private TextView newsFun;
     private RelativeLayout relaytiveNews1;
@@ -227,6 +227,8 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         iView2 = (ImageView) view.findViewById(R.id.image_news_2);
         iView3 = (ImageView) view.findViewById(R.id.image_news_3);
         relaytive_thugon = (RelativeLayout) view.findViewById(R.id.relaytive_thugon);
+        relaytive_continues_Home = (RelativeLayout) view.findViewById(R.id.relaytive_continues_Home);
+
         relaytiveContinues.setOnClickListener(this);
         relaytive_thugon.setOnClickListener(this);
         relaytiveNewsBussiness.setOnClickListener(this);
@@ -241,7 +243,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         relaytiveNewsTravel.setOnClickListener(this);
         relaytiveNewsWorld.setOnClickListener(this);
         relaytiveNewsXe.setOnClickListener(this);
-
+        relaytive_continues_Home.setOnClickListener(this);
 
         String city = "Ha Noi, VN";
         JSONWeatherTask task = new JSONWeatherTask();
@@ -260,6 +262,16 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         Intent in;
         String page_url;
         switch (view.getId()){
+
+            case R.id.relaytive_continues_Home:
+                in = new Intent(getContext(), ListNewsActivity.class);
+
+                // getting page url
+                page_url = "http://vnexpress.net/rss/tin-moi-nhat.rss";
+                in.putExtra("page_url", page_url);
+                in.putExtra("Title", "VnExPressHome");
+                startActivity(in);
+                break;
 
             case R.id.relaytive_news_health:
                  in = new Intent(getContext(), ListNewsActivity.class);
@@ -431,16 +443,19 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
             if (rssItems.size() > 0) {
                 Picasso.with(activity)
                         .load(rssItems.get(0).getDescription())
+                        .resize(220,220)
                         .into(iView1);
                 news1Title.setText(rssItems.get(0).getTitle());
                 //news1Date.setText(rssItems.get(0).getPubdate());
                 Picasso.with(activity)
                         .load(rssItems.get(1).getDescription())
+                        .resize(220,220)
                         .into(iView2);
                 news2Title.setText(rssItems.get(1).getTitle());
                 //news2Date.setText(rssItems.get(1).getPubdate());
                 Picasso.with(activity)
                         .load(rssItems.get(2).getDescription())
+                        .resize(220,220)
                         .into(iView3);
                 news3Title.setText(rssItems.get(2).getTitle());
                 //news3Date.setText(rssItems.get(2).getPubdate());
@@ -452,6 +467,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
                         // getting page url
                         String page_url = rssItems.get(0).getLink();
                         in.putExtra("page_url", page_url);
+                        in.putExtra("Title", "VnExPressHome");
                         startActivity(in);
                     }
                 });
@@ -463,6 +479,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
                         // getting page url
                         String page_url = rssItems.get(1).getLink();
                         in.putExtra("page_url", page_url);
+                        in.putExtra("Title", "VnExPressHome");
                         startActivity(in);
                     }
                 });
@@ -474,6 +491,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
                         // getting page url
                         String page_url = rssItems.get(2).getLink();
                         in.putExtra("page_url", page_url);
+                        in.putExtra("Title", "VnExPressHome");
                         startActivity(in);
                     }
                 });

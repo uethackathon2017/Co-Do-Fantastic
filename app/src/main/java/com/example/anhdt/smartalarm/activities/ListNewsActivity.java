@@ -93,7 +93,10 @@ public class ListNewsActivity extends ListActivity {
 
                 // getting page url
                 String page_url = ((TextView) view.findViewById(R.id.page_url)).getText().toString();
+                String news_Title = ((TextView) view.findViewById(R.id.news_Title)).getText().toString();
                 in.putExtra("page_url", page_url);
+                in.putExtra("Title",getIntent().getStringExtra("Title"));
+
                 startActivity(in);
             }
         });
