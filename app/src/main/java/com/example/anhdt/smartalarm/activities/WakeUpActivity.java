@@ -1,10 +1,17 @@
 package com.example.anhdt.smartalarm.activities;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,9 +19,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.anhdt.smartalarm.R;
+import com.example.anhdt.smartalarm.adapters.PagerAdapter;
 import com.example.anhdt.smartalarm.adapters.RSSParser;
 import com.example.anhdt.smartalarm.fragments.NewsFragment;
 import com.example.anhdt.smartalarm.models.RSSItem;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -22,7 +31,7 @@ import java.util.List;
 
 import static com.example.anhdt.smartalarm.R.id.relaytive_thugon;
 
-public class WakeUpActivity extends Activity implements View.OnClickListener {
+public class WakeUpActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView textView;
     private RelativeLayout linerWeather;
@@ -51,6 +60,7 @@ public class WakeUpActivity extends Activity implements View.OnClickListener {
     RSSParser rssParser = new RSSParser();
 
     List<RSSItem> rssItems = new ArrayList<RSSItem>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,11 +100,30 @@ public class WakeUpActivity extends Activity implements View.OnClickListener {
     }
 
     private void init() {
+
+        //check internet
+        if (isNetworkConnected() == false) {
+            relaytiveNews1.setVisibility(View.GONE);
+            relaytiveNews2.setVisibility(View.GONE);
+            relaytiveNews3.setVisibility(View.GONE);
+            tvContinuesHome.setText("no internet access");
+            Log.v("abc", "ko co mang");
+        } else {
+            relaytiveNews1.setVisibility(View.VISIBLE);
+            relaytiveNews2.setVisibility(View.VISIBLE);
+            relaytiveNews3.setVisibility(View.VISIBLE);
+            tvContinuesHome.setText("Xem thêm ...");
+        }
         String rss_link = "http://vnexpress.net/rss/tin-moi-nhat.rss";
 
         new loadRSSFeedItems().execute(rss_link);
-    }
 
+    }
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null;
+    }
     @Override
     public void onClick(View view) {
         Intent in;
