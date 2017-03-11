@@ -4,38 +4,36 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dip" >
-    
+
     <TextView android:id="@+id/page_url"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"/>
- 
-    <!-- Article title -->
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="1dip"
-        android:textSize="18dip"
-        android:textStyle="bold"
-        android:textColor="#303030" />
-    
-    <!-- published date -->
-    <TextView 
-        android:id="@+id/pub_date"
-        android:layout_below="@id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="3dip"
-        android:textSize="14dip"
-        android:textColor="#b70400"/>
- 
-    <!-- article description -->
-    <TextView android:id="@+id/link"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:paddingBottom="6dip"
-        android:textSize="15dip"
-        android:textColor="#8d8d8d"
-        android:layout_below="@id/pub_date"/>
+
+    <RelativeLayout
+        android:id="@+id/relaytive_news"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_margin="6dp"
+        android:layout_centerHorizontal="true"
+        >
+
+        <ImageView
+            android:id="@+id/image_news"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            />
+
+        <TextView
+            android:id="@+id/news_Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:layout_alignParentBottom="true"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:background="#25000000"/>
+    </RelativeLayout>
 </RelativeLayout>

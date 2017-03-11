@@ -530,6 +530,7 @@
                     android:background="#25000000"/>
 
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/relaytive_news_3"
                 android:layout_width="match_parent"

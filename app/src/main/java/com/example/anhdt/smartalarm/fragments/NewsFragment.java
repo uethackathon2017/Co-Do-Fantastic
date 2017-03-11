@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.anhdt.smartalarm.R;
 import com.example.anhdt.smartalarm.activities.DisPlayWebPageActivity;
+import com.example.anhdt.smartalarm.activities.ListNewsActivity;
 import com.example.anhdt.smartalarm.adapters.RSSParser;
 import com.example.anhdt.smartalarm.models.RSSFeed;
 import com.example.anhdt.smartalarm.models.RSSItem;
@@ -162,10 +163,6 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
 
         String rss_link = "http://vnexpress.net/rss/tin-moi-nhat.rss";
 
-        /**
-         * Calling a backgroung thread will loads recent articles of a website
-         * @param rss url of website
-         * */
         new loadRSSFeedItems().execute(rss_link);
         initComponent(view);
     }
@@ -260,31 +257,117 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        Intent in;
+        String page_url;
         switch (view.getId()){
 
             case R.id.relaytive_news_health:
+                 in = new Intent(getContext(), ListNewsActivity.class);
+
+                // getting page url
+                 page_url = "http://vnexpress.net/rss/suc-khoe.rss";
+                in.putExtra("page_url", page_url);
+                in.putExtra("Title", "Sức khỏe");
+                startActivity(in);
                 break;
             case R.id.relaytive_news_bussiness:
+                 in = new Intent(getContext(), ListNewsActivity.class);
+
+                // getting page url
+                 page_url = "http://vnexpress.net/rss/kinh-doanh.rss";
+                in.putExtra("page_url", page_url);
+                in.putExtra("Title", "Kinh doanh");
+                startActivity(in);
                 break;
             case R.id.relaytive_news_science:
+                in = new Intent(getContext(), ListNewsActivity.class);
+
+                // getting page url
+                page_url = "http://vnexpress.net/rss/khoa-hoc.rss";
+                in.putExtra("page_url", page_url);
+                in.putExtra("Title", "Khoa học");
+                startActivity(in);
                 break;
             case R.id.relaytive_news_sports:
+                in = new Intent(getContext(), ListNewsActivity.class);
+
+                // getting page url
+                page_url = "http://vnexpress.net/rss/the-thao.rss";
+                in.putExtra("page_url", page_url);
+                in.putExtra("Title", "Thể thao");
+                startActivity(in);
                 break;
             case R.id.relaytive_news_world:
+                in = new Intent(getContext(), ListNewsActivity.class);
+
+                // getting page url
+                page_url = "http://vnexpress.net/rss/the-gioi.rss";
+                in.putExtra("page_url", page_url);
+                in.putExtra("Title", "Thế giới");
+                startActivity(in);
                 break;
             case R.id.relaytive_news_travel:
+                in = new Intent(getContext(), ListNewsActivity.class);
+
+                // getting page url
+                page_url = "http://vnexpress.net/rss/du-lich.rss";
+                in.putExtra("page_url", page_url);
+                in.putExtra("Title", "Du lịch");
+                startActivity(in);
                 break;
             case R.id.relaytive_news_fun:
+                in = new Intent(getContext(), ListNewsActivity.class);
+
+                // getting page url
+                page_url = "http://vnexpress.net/rss/cuoi.rss";
+                in.putExtra("page_url", page_url);
+                in.putExtra("Title", "Cười");
+                startActivity(in);
                 break;
             case R.id.relaytive_news_education:
+                in = new Intent(getContext(), ListNewsActivity.class);
+
+                // getting page url
+                page_url = "http://vnexpress.net/rss/giao-duc.rss";
+                in.putExtra("page_url", page_url);
+                in.putExtra("Title", "Giáo dục");
+                startActivity(in);
                 break;
             case R.id.relaytive_news_events:
+                in = new Intent(getContext(), ListNewsActivity.class);
+
+                // getting page url
+                page_url = "http://vnexpress.net/rss/thoi-su.rss";
+                in.putExtra("page_url", page_url);
+                in.putExtra("Title", "Thời sự");
+                startActivity(in);
                 break;
             case R.id.relaytive_news_entertain:
+                in = new Intent(getContext(), ListNewsActivity.class);
+
+                // getting page url
+                page_url = "http://vnexpress.net/rss/giai-tri.rss";
+                in.putExtra("page_url", page_url);
+                in.putExtra("Title", "Giải trí");
+                startActivity(in);
                 break;
             case R.id.relaytive_news_laws:
+                in = new Intent(getContext(), ListNewsActivity.class);
+
+                // getting page url
+                page_url = "http://vnexpress.net/rss/phap-luat.rss";
+                in.putExtra("page_url", page_url);
+                in.putExtra("Title", "Luật");
+                startActivity(in);
                 break;
             case R.id.relaytive_news_xe:
+                in = new Intent(getContext(), ListNewsActivity.class);
+
+                // getting page url
+                page_url = "http://vnexpress.net/rss/oto-xe-may.rss";
+                in.putExtra("page_url", page_url);
+                in.putExtra("Title", "Ôtô Xe máy");
+                startActivity(in);
                 break;
             case R.id.relaytive_thugon:
                 relaytive_thugon.setVisibility(View.GONE);
@@ -395,6 +478,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
 
         }
     }
+
     private class JSONWeatherTask extends AsyncTask<String, Void, Weather> {
 
         @Override
