@@ -51,7 +51,7 @@
                 android:layout_margin="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chọn Game Alarm:"
+                android:text="Chọn thử thách:"
                 android:textSize="16sp"
                 android:textColor="@android:color/white"/>
             <TextView
@@ -59,7 +59,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Vận Động"
+                android:text="Thử thách vận động"
                 android:textColor="@android:color/white"
                 android:layout_alignParentRight="true"
                 android:textSize="16sp"
@@ -115,11 +115,12 @@
                 android:text="T2"
                 android:gravity="center"
                 android:layout_below="@id/text_chose_day_repeat"
-                android:background="@drawable/border_btn"
+                android:background="@drawable/textview_state"
                 android:textColor="@android:color/white"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
+                android:padding="5dp"
                 android:layout_alignStart="@+id/text_chose_day_repeat" />
             <TextView
                 android:id="@+id/btn_T3"
@@ -128,10 +129,11 @@
                 android:layout_height="wrap_content"
                 android:text="T3"
                 android:gravity="center"
-                android:background="@drawable/border_btn"
+                android:background="@drawable/textview_state"
                 android:textColor="@android:color/white"
                 android:layout_alignBaseline="@+id/btn_T2"
                 android:layout_alignBottom="@+id/btn_T2"
+                android:padding="5dp"
                 android:layout_toEndOf="@+id/btn_T2" />
             <TextView
                 android:id="@+id/btn_T4"
@@ -140,10 +142,11 @@
                 android:layout_height="wrap_content"
                 android:text="T4"
                 android:gravity="center"
-                android:background="@drawable/border_btn"
+                android:background="@drawable/textview_state"
                 android:textColor="@android:color/white"
                 android:layout_alignBaseline="@+id/btn_T3"
                 android:layout_alignBottom="@+id/btn_T3"
+                android:padding="5dp"
                 android:layout_toEndOf="@+id/btn_T3" />
             <TextView
                 android:id="@+id/btn_T5"
@@ -152,10 +155,11 @@
                 android:layout_height="wrap_content"
                 android:text="T5"
                 android:gravity="center"
-                android:background="@drawable/border_btn"
+                android:background="@drawable/textview_state"
                 android:textColor="@android:color/white"
                 android:layout_alignBaseline="@+id/btn_T4"
                 android:layout_alignBottom="@+id/btn_T4"
+                android:padding="5dp"
                 android:layout_toEndOf="@+id/btn_T4" />
             <TextView
                 android:id="@+id/btn_T6"
@@ -164,10 +168,11 @@
                 android:layout_height="wrap_content"
                 android:text="T6"
                 android:gravity="center"
-                android:background="@drawable/border_btn"
+                android:background="@drawable/textview_state"
                 android:textColor="@android:color/white"
                 android:layout_alignBaseline="@+id/btn_T5"
                 android:layout_alignBottom="@+id/btn_T5"
+                android:padding="5dp"
                 android:layout_toEndOf="@+id/btn_T5" />
             <TextView
                 android:id="@+id/btn_T7"
@@ -175,8 +180,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="T7"
+                android:padding="5dp"
                 android:gravity="center"
-                android:background="@drawable/border_btn"
+                android:background="@drawable/textview_state"
                 android:textColor="@android:color/white"
                 android:layout_alignBaseline="@+id/btn_T6"
                 android:layout_alignBottom="@+id/btn_T6"
@@ -187,8 +193,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CN"
+                android:padding="5dp"
                 android:gravity="center"
-                android:background="@drawable/border_btn"
+                android:background="@drawable/textview_state"
                 android:textColor="@android:color/white"
                 android:layout_alignBaseline="@+id/btn_T7"
                 android:layout_alignBottom="@+id/btn_T7"
@@ -212,6 +219,7 @@
                 android:textColor="@android:color/white"
                 />
             <EditText
+                android:id="@+id/edTypeLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColorHint="#40ffffff"
@@ -226,6 +234,7 @@
                 android:layout_toEndOf="@+id/text_chose_label"/>
 
             <RelativeLayout
+                android:id="@+id/relativeChooseRingTone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_chose_label">
