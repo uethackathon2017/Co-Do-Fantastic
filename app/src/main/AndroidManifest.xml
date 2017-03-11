@@ -39,6 +39,13 @@
             android:label="@string/app_name"
             android:process="com.example.anhdt.serviceProcess" />
 
+        <service
+            android:name=".services.PlayRingToneService"
+            android:icon="@mipmap/ic_launcher"
+            android:label="com.example.anhdt.playservice"
+            android:process=":my_process"
+            />
+
         <activity android:name=".activities.ListNewsActivity" />
         <activity android:name=".activities.DisPlayWebPageActivity" />
         <activity android:name=".activities.CaculateActivity" />

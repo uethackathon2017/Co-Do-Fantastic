@@ -1,16 +1,25 @@
 package com.example.anhdt.smartalarm.challenges.countstep.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,15 +28,26 @@ import com.example.anhdt.smartalarm.challenges.countstep.accelerometer.Accelerom
 import com.example.anhdt.smartalarm.challenges.countstep.accelerometer.AccelerometerProcessing;
 import com.example.anhdt.smartalarm.challenges.countstep.accelerometer.OnStepCountChangeListener;
 import com.example.anhdt.smartalarm.challenges.countstep.dialogs.MyDialogEndTime;
+import com.example.anhdt.smartalarm.models.Alarm;
+import com.example.anhdt.smartalarm.services.PlayRingToneService;
+import com.example.anhdt.smartalarm.utils.StaticWakeLock;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 
 import java.util.Locale;
 
 public class CountStepActivity extends AppCompatActivity {
 
-    private static final int TIME_PLAY_EACH_QUESTION = 10;
+    private Alarm alarm;
+    private MediaPlayer mediaPlayer;
+
+    private Vibrator vibrator;
+
+    private boolean alarmActive;
+
+    private static final int TIME_PLAY_EACH_QUESTION = 60;
     private static final int NUMBER_MAX_STEP = 40;
     private static final int TIME_REMAIN_EACH_QUESTION = 101;
+
     private static final String TAG = CountStepActivity.class.getSimpleName();
 
     private static final String PREFERENCES_NAME = "Values";
@@ -41,6 +61,8 @@ public class CountStepActivity extends AppCompatActivity {
     private MyDialogEndTime myDialogEndTime;
     private ArcProgress arcProgress;
 
+    private Intent playIntent;
+
     private Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -49,15 +71,23 @@ public class CountStepActivity extends AppCompatActivity {
                 case TIME_REMAIN_EACH_QUESTION:
                     mTimeValTextView.setText(msg.arg1 + "");
                     if (msg.arg1 == 0) {
-                        myDialogEndTime.show();
-                        Handler handlerShow = new Handler();
-                        handlerShow.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                myDialogEndTime.dismiss();
-                            }
-                        }, 4000);
-                        Toast.makeText(CountStepActivity.this,"Ahihi",Toast.LENGTH_SHORT).show();
+                        if (mStepCount >= NUMBER_MAX_STEP) {
+                            myDialogEndTime.show();
+                            Handler handlerShow = new Handler();
+                            handlerShow.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    myDialogEndTime.dismiss();
+                                }
+                            }, 4000);
+                            stopService(playIntent);
+                            CountStepActivity.this.finish();
+                        }
+                        else {
+                            mStepCount = 0;
+                            time = TIME_PLAY_EACH_QUESTION;
+                        }
+
                     }
                     break;
             }
@@ -68,11 +98,18 @@ public class CountStepActivity extends AppCompatActivity {
     // constant reference
     private final AccelerometerProcessing mAccelerometerProcessing = AccelerometerProcessing.getInstance();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         setContentView(R.layout.activity_count_step);
+
+        Bundle bundle = this.getIntent().getExtras();
+        alarm = (Alarm) bundle.getSerializable("alarm");
 
         isRunning = true;
         time = TIME_PLAY_EACH_QUESTION;
@@ -88,11 +125,7 @@ public class CountStepActivity extends AppCompatActivity {
         arcProgress = (ArcProgress)findViewById(R.id.arc_progress);
         arcProgress.setMax(NUMBER_MAX_STEP);
         arcProgress.setProgress(0);
-        // accelerometer graph setup:
 
-        // get and configure text views
-//        mStepCountTextView = (TextView)findViewById(R.id.stepcount_textView);
-//        mStepCountTextView.setText(String.valueOf(0)+ "/" + String.valueOf(NUMBER_MAX_STEP));
 
         // initialize accelerometer
         SensorManager sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
@@ -103,7 +136,8 @@ public class CountStepActivity extends AppCompatActivity {
                 ++mStepCount;
                 //mStepCountTextView.setText(String.valueOf(mStepCount) + "/" + String.valueOf(NUMBER_MAX_STEP) );
                 if(arcProgress.getProgress() == NUMBER_MAX_STEP){
-                    Toast.makeText(CountStepActivity.this,"CCMM DDAO CHOS",Toast.LENGTH_SHORT).show();
+                    stopService(playIntent);
+                    CountStepActivity.this.finish();
                 }
                 else {
                     arcProgress.setProgress(mStepCount);
@@ -113,6 +147,16 @@ public class CountStepActivity extends AppCompatActivity {
 
         Thread thread = new Thread(runnable2);
         thread.start();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(playIntent==null){
+            playIntent = new Intent(this, PlayRingToneService.class);
+            playIntent.putExtra("alarm", alarm);
+            startService(playIntent);
+        }
     }
 
     @Override
@@ -171,15 +215,45 @@ public class CountStepActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume");
+        alarmActive = true;
         mAccelDetector.startDetector();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!alarmActive)
+            super.onBackPressed();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG, "OnPause");
+        StaticWakeLock.lockOff(this);
         mAccelDetector.stopDetector();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (myDialogEndTime.isShowing()) {
+            myDialogEndTime.dismiss();
+        }
+        try {
+            if (vibrator != null)
+                vibrator.cancel();
+        } catch (Exception e) {
+
+        }
+        try {
+            mediaPlayer.stop();
+        } catch (Exception e) {
+
+        }
+        try {
+            mediaPlayer.release();
+        } catch (Exception e) {
+
+        }
+        super.onDestroy();
     }
 
     @Override
