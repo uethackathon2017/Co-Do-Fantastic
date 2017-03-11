@@ -1,15 +1,20 @@
 package com.example.anhdt.smartalarm.fragments;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +36,7 @@ import com.example.anhdt.smartalarm.adapters.RSSParser;
 import com.example.anhdt.smartalarm.models.RSSFeed;
 import com.example.anhdt.smartalarm.models.RSSItem;
 import com.example.anhdt.smartalarm.models.Weather;
+import com.example.anhdt.smartalarm.services.GPSTracker;
 import com.example.anhdt.smartalarm.utils.JSONWeatherParser;
 import com.example.anhdt.smartalarm.utils.WeatherHttpClient;
 import com.squareup.picasso.Picasso;
@@ -40,9 +46,10 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
-public class NewsFragment extends Fragment implements View.OnClickListener {
+public class NewsFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String SPEED = "Tốc độ gió : ";
@@ -51,7 +58,9 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private ProgressDialog pDialog;
-
+    private Map<String,String> weatherCondition = new HashMap<String, String>();
+    private Map<String,String> weatherConditionDescription = new HashMap<String, String>();
+//    private GPSTracker gpsTracker;
 
     // Array list for list view
     ArrayList<HashMap<String, String>> rssItemList = new ArrayList<HashMap<String,String>>();
@@ -65,6 +74,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
     private TextView txv_speed;
     private TextView txv_description;
     private TextView txv_locationName;
+    private ImageView imv_weather;
 
     private RelativeLayout newsHead;
     private RelativeLayout relaytiveNewsWorld;
@@ -167,12 +177,69 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         initComponent(view);
     }
 
+    private void initHashMapWeatherConditon(){
+        weatherCondition.put("Thunderstorm","Bão");
+        weatherCondition.put("Drizzle","Mưa nhỏ");
+        weatherCondition.put("Rain","Mưa to");
+        weatherCondition.put("Snow","Tuyết");
+        weatherCondition.put("Atmosphere","Khí trời");
+        weatherCondition.put("Clear","Trog sạch");
+        weatherCondition.put("Extreme","Cực đoan");
+        weatherCondition.put("Clouds","Mây");
+        weatherCondition.put("Additional","Bổ sung");
+    }
+    private void initHashMapWeatherConditionDescriotion(){
+        weatherConditionDescription.put("thunderstorm with light rain","Bão có mưa nhẹ");
+        weatherConditionDescription.put("thunderstorm with rain","Cơn bão với mưa");
+        weatherConditionDescription.put("thunderstorm with heavy rain","Bão có mưa lớn");
+        weatherConditionDescription.put("light thunderstorm","Sấm sét nhẹ");
+        weatherConditionDescription.put("thunderstorm","Dông");
+        weatherConditionDescription.put("heavy thunderstorm","Cơn bão mạnh");
+        weatherConditionDescription.put("ragged thunderstorm","Dông bão");
+        weatherConditionDescription.put("thunderstorm with light drizzle","Bão có mưa phùn");
+        weatherConditionDescription.put("thunderstorm with drizzle","Bão có mưa phùn");
+        weatherConditionDescription.put("thunderstorm with heavy drizzle","Bão có mưa lớn");
+        weatherConditionDescription.put("light intensity drizzle","Mưa phùn trời sáng");
+        weatherConditionDescription.put("drizzle","Mưa phùn");
+        weatherConditionDescription.put("heavy intensity drizzle","Mưa phùn cường độ nặng");
+        weatherConditionDescription.put("light intensity drizzle rain","Cường độ mưa phùn nhẹ");
+        weatherConditionDescription.put("drizzle rain","Mưa phùn");
+        weatherConditionDescription.put("heavy intensity drizzle rain","Cường độ mưa phùn lớn");
+        weatherConditionDescription.put("shower rain and drizzle","Mưa vừa và mưa phùn");
+        weatherConditionDescription.put("heavy shower rain and drizzle","Mưa lớn và mưa phùn");
+        weatherConditionDescription.put("shower drizzle","Mưa vừa");
+        weatherConditionDescription.put("light rain","Mưa nhỏ");
+        weatherConditionDescription.put("moderate rain","Mưa vừa");
+        weatherConditionDescription.put("heavy intensity rain","Mưa cường độ nặng");
+        weatherConditionDescription.put("","");
+        weatherConditionDescription.put("","");
+        weatherConditionDescription.put("","");
+        weatherConditionDescription.put("","");
+        weatherConditionDescription.put("","");
+        weatherConditionDescription.put("","");
+        weatherConditionDescription.put("","");
+        weatherConditionDescription.put("","");
+        weatherConditionDescription.put("","");
+        weatherConditionDescription.put("","");
+        weatherConditionDescription.put("","");
+        weatherConditionDescription.put("","");
+        weatherConditionDescription.put("","");
+        weatherConditionDescription.put("","");
+        weatherConditionDescription.put("","");
+        weatherConditionDescription.put("","");
+        weatherConditionDescription.put("","");
+        weatherConditionDescription.put("","");
+
+
+    }
+
     private void initComponent(View view) {
         txv_temp = (TextView) view.findViewById(R.id.txv_temperature);
         txv_humidity = (TextView) view.findViewById(R.id.txv_humidity);
         txv_speed = (TextView) view.findViewById(R.id.txv_speed);
         txv_description = (TextView) view.findViewById(R.id.txv_description);
         txv_locationName = (TextView) view.findViewById(R.id.txv_location_name);
+        imv_weather = (ImageView) view.findViewById(R.id.imv_weather);
 
         newsHead = (RelativeLayout) view.findViewById(R.id.news_head);
         relaytiveNewsWorld = (RelativeLayout) view.findViewById(R.id.relaytive_news_world);
@@ -383,6 +450,8 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
 
     }
 
+
+
     class loadRSSFeedItems extends AsyncTask<String, String, String> {
 
         private ArrayList<String> linkImage = new ArrayList<>();
@@ -502,10 +571,14 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         protected void onPostExecute(Weather weather) {
             super.onPostExecute(weather);
 
-//            if (weather.iconData != null && weather.iconData.length > 0) {
-//                Bitmap img = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length);
-//                imgView.setImageBitmap(img);
-//            }
+            if (weather.currentCondition.getIcon() != null) {
+                //Bitmap img = BitmapFactory.decodeByteArray(weather.currentCondition.getIcon(), 0, weather.iconData.length);
+                //imv_weather.setImageBitmap(img);
+                Picasso.with(getActivity())
+                        .load("http://openweathermap.org/img/w/" + weather.currentCondition.getIcon() + ".png")
+                        .into(imv_weather);
+                Log.i("ICON", weather.currentCondition.getIcon() +"");
+            }
             txv_locationName.setText(weather.location.getCity() + "," + weather.location.getCountry());
             txv_description.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");
             txv_temp.setText("" + Math.round((weather.temperature.getTemp() - 273.15)) + " độ C");
@@ -516,4 +589,37 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
 
         }
     }
+
+//    @Override
+//    public void setOnShowSettingIntent() {
+//        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+//    }
+//
+//    private void getLatLong() {
+//
+//        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+//
+//        } else {
+//            gpsTracker = new GPSTracker(getActivity(), getActivity(), this);
+//
+//            // Check if GPS enabled
+//            if (gpsTracker.canGetLocation()) {
+//
+//                double latitude = gpsTracker.getLatitude();
+//                double longitude = gpsTracker.getLongitude();
+//            } else {
+//                // Can't get location.
+//                // GPS or network is not enabled.
+//                // Ask user to enable GPS/network in settings.
+//                gpsTracker.showSettingsAlert();
+//            }
+//        }
+//    }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        getLatLong();
+//    }
 }

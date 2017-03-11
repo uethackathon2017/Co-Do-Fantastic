@@ -35,10 +35,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'org.jsoup:jsoup:1.9.2'
     compile 'org.apache:apache:18'
-<<<<<<< HEAD
-=======
-    compile 'com.android.support.constraint:constraint-layout:1.0.1'
     compile 'com.github.lzyzsd:circleprogress:1.2.1'
->>>>>>> d3e235af0be35c6f00a9d18c0ce9265db1cf6181
     testCompile 'junit:junit:4.12'
 }
