@@ -1,6 +1,8 @@
 package com.example.anhdt.smartalarm.fragments;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,6 +27,7 @@ import com.example.anhdt.smartalarm.activities.DisPlayWebPageActivity;
 import com.example.anhdt.smartalarm.adapters.RSSParser;
 import com.example.anhdt.smartalarm.models.RSSFeed;
 import com.example.anhdt.smartalarm.models.RSSItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -104,11 +107,18 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Activity activity;
+
     ListAdapter adapter;
     public NewsFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (Activity) context;
+    }
 
     public static NewsFragment newInstance(String param1, String param2) {
         NewsFragment fragment = new NewsFragment();
@@ -186,13 +196,13 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         newsFun = (TextView) view.findViewById(R.id.news_fun);
         relaytiveNews1 = (RelativeLayout) view.findViewById(R.id.relaytive_news_1);
         news1Title = (TextView) view.findViewById(R.id.news_1_Title);
-        news1Date = (TextView) view.findViewById(R.id.news_1_Date);
+        //news1Date = (TextView) view.findViewById(R.id.news_1_Date);
         relaytiveNews2 = (RelativeLayout) view.findViewById(R.id.relaytive_news_2);
         news2Title = (TextView) view.findViewById(R.id.news_2_Title);
-        news2Date = (TextView) view.findViewById(R.id.news_2_Date);
+        //news2Date = (TextView) view.findViewById(R.id.news_2_Date);
         relaytiveNews3 = (RelativeLayout) view.findViewById(R.id.relaytive_news_3);
         news3Title = (TextView) view.findViewById(R.id.news_3_Title);
-        news3Date = (TextView) view.findViewById(R.id.news_3_Date);
+        //news3Date = (TextView) view.findViewById(R.id.news_3_Date);
         iView1 = (ImageView) view.findViewById(R.id.image_news_1);
         iView2 = (ImageView) view.findViewById(R.id.image_news_2);
         iView3 = (ImageView) view.findViewById(R.id.image_news_3);
@@ -263,20 +273,15 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    class 	loadRSSFeedItems extends AsyncTask<String, String, String> {
+    class loadRSSFeedItems extends AsyncTask<String, String, String> {
 
+        private ArrayList<String> linkImage = new ArrayList<>();
         /**
          * Before starting background thread Show Progress Dialog
          * */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(
-                    getContext());
-            pDialog.setMessage("Loading recent articles...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show();
         }
 
         /**
@@ -287,27 +292,20 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
             // rss link url
             String rss_url = args[0];
 
+            int count = 0;
             // list of rss items
             rssItems = rssParser.getRSSFeedItems(rss_url);
 
             // looping through each item
             for(RSSItem item : rssItems){
                 // creating new HashMap
-                HashMap<String, String> map = new HashMap<String, String>();
-
-                // adding each child node to HashMap key => value
-                map.put(TAG_TITLE, item.getTitle());
-                map.put(TAG_LINK, item.getLink());
-                map.put(TAG_PUB_DATE, item.getPubdate()); // If you want parse the date
+                if (count >= 3) break;
                 String description = item.getDescription();
-                // taking only 200 chars from description
-                if(description.length() > 100){
-                    description = description.substring(0, 97) + "..";
+                if (description.contains("_180x108")) {
+                    description = description.replace("_180x108", "");
+                    item.setDescription(description);
                 }
-                map.put(TAG_DESRIPTION, description);
-
-                // adding HashList to ArrayList
-                rssItemList.add(map);
+                count++;
             }
 
             // updating UI from Background Thread
@@ -320,59 +318,57 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
          * **/
         protected void onPostExecute(String args) {
             // dismiss the dialog after getting all products
-            pDialog.dismiss();
+            if (rssItems.size() > 0) {
+                Picasso.with(activity)
+                        .load(rssItems.get(0).getDescription())
+                        .into(iView1);
+                news1Title.setText(rssItems.get(0).getTitle());
+                //news1Date.setText(rssItems.get(0).getPubdate());
+                Picasso.with(activity)
+                        .load(rssItems.get(1).getDescription())
+                        .into(iView2);
+                news2Title.setText(rssItems.get(1).getTitle());
+                //news2Date.setText(rssItems.get(1).getPubdate());
+                Picasso.with(activity)
+                        .load(rssItems.get(2).getDescription())
+                        .into(iView3);
+                news3Title.setText(rssItems.get(2).getTitle());
+                //news3Date.setText(rssItems.get(2).getPubdate());
+                relaytiveNews1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent in = new Intent(getContext(), DisPlayWebPageActivity.class);
 
-            Glide.with(getContext())
-                    .load(rssItems.get(0).getDescription())
-                    .centerCrop()
-                    .into(iView1);
-            news1Title.setText(rssItems.get(0).getTitle());
-            news1Date.setText(rssItems.get(0).getPubdate());
-            Glide.with(getContext())
-                    .load(rssItems.get(1).getDescription())
-                    .centerCrop()
-                    .into(iView2);
-            news2Title.setText(rssItems.get(1).getTitle());
-            news2Date.setText(rssItems.get(1).getPubdate());
-            Glide.with(getContext())
-                    .load(rssItems.get(2).getDescription())
-                    .centerCrop()
-                    .into(iView3);
-            news3Title.setText(rssItems.get(2).getTitle());
-            news3Date.setText(rssItems.get(2).getPubdate());
-            relaytiveNews1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent in = new Intent(getContext(), DisPlayWebPageActivity.class);
+                        // getting page url
+                        String page_url = rssItems.get(0).getLink();
+                        in.putExtra("page_url", page_url);
+                        startActivity(in);
+                    }
+                });
+                relaytiveNews2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent in = new Intent(getContext(), DisPlayWebPageActivity.class);
 
-                    // getting page url
-                    String page_url = rssItems.get(0).getLink();
-                    in.putExtra("page_url", page_url);
-                    startActivity(in);
-                }
-            });
-            relaytiveNews2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent in = new Intent(getContext(), DisPlayWebPageActivity.class);
+                        // getting page url
+                        String page_url = rssItems.get(1).getLink();
+                        in.putExtra("page_url", page_url);
+                        startActivity(in);
+                    }
+                });
+                relaytiveNews3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent in = new Intent(getContext(), DisPlayWebPageActivity.class);
 
-                    // getting page url
-                    String page_url = rssItems.get(1).getLink();
-                    in.putExtra("page_url", page_url);
-                    startActivity(in);
-                }
-            });
-            relaytiveNews3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent in = new Intent(getContext(), DisPlayWebPageActivity.class);
+                        // getting page url
+                        String page_url = rssItems.get(2).getLink();
+                        in.putExtra("page_url", page_url);
+                        startActivity(in);
+                    }
+                });
+            }
 
-                    // getting page url
-                    String page_url = rssItems.get(2).getLink();
-                    in.putExtra("page_url", page_url);
-                    startActivity(in);
-                }
-            });
         }
     }
 }
