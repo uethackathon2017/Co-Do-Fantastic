@@ -450,12 +450,14 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
                 Picasso.with(activity)
                         .load(rssItems.get(1).getDescription())
                         .resize(220,220)
+                        .centerCrop()
                         .into(iView2);
                 news2Title.setText(rssItems.get(1).getTitle());
                 //news2Date.setText(rssItems.get(1).getPubdate());
                 Picasso.with(activity)
                         .load(rssItems.get(2).getDescription())
                         .resize(220,220)
+                        .centerCrop()
                         .into(iView3);
                 news3Title.setText(rssItems.get(2).getTitle());
                 //news3Date.setText(rssItems.get(2).getPubdate());
