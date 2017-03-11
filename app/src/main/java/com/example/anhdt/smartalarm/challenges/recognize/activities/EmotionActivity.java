@@ -40,7 +40,7 @@ public class EmotionActivity extends AppCompatActivity {
     private static final int REQUEST_SELECT_IMAGE = 0;
 
     // The button to select an image
-    private Button mButtonSelectImage;
+    private ImageView mButtonSelectImage;
 
     // The URI of the image selected to detect.
     private Uri mImageUri;
@@ -62,7 +62,7 @@ public class EmotionActivity extends AppCompatActivity {
             client = new EmotionServiceRestClient(getString(R.string.subscription_key));
         }
 
-        mButtonSelectImage = (Button) findViewById(R.id.buttonSelectImage);
+        mButtonSelectImage = (ImageView) findViewById(R.id.selectedImage);
         mEditText = (EditText) findViewById(R.id.editTextResult);
     }
 
