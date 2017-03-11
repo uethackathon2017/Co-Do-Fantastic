@@ -26,6 +26,7 @@ dependencies {
     })
     compile files('libs/apache-httpcomponents-httpcore.jar')
     compile files('libs/httpclient-4.0.3.jar')
+    compile files('libs/achartengine-1.1.0.jar')
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support:design:25.2.0'
     compile 'com.android.support:support-v4:25.2.0'
@@ -34,5 +35,10 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'org.jsoup:jsoup:1.9.2'
     compile 'org.apache:apache:18'
+<<<<<<< HEAD
+=======
+    compile 'com.android.support.constraint:constraint-layout:1.0.1'
+    compile 'com.github.lzyzsd:circleprogress:1.2.1'
+>>>>>>> d3e235af0be35c6f00a9d18c0ce9265db1cf6181
     testCompile 'junit:junit:4.12'
 }

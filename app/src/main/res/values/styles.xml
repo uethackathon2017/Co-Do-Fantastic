@@ -11,4 +11,9 @@
         <item name="colorAccent">#FF4081</item>
     </style>
 
+    <style name="DialogAnim">
+        <item name="android:windowEnterAnimation">@anim/setanim_enter</item>
+
+        <item name="android:windowExitAnimation">@anim/setanim_exit</item>
+    </style>
 </resources>

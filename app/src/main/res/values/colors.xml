@@ -10,6 +10,6 @@
     <color name="colorGreen">#00FF00</color>
     <color name="colorOrange">#FFB74D</color>
     <color name="colorWhite">#FFFFFF</color>
-
+    <color name="title_diaglog_exit_purpil">#7A1EA1</color>
 
 </resources>
