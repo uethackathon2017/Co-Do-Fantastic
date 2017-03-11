@@ -29,7 +29,7 @@ import com.example.anhdt.smartalarm.models.Alarm;
 import java.lang.reflect.Field;
 import java.util.Calendar;
 
-public class SetAlarmActivity extends AppCompatActivity implements OnClickListener{
+public class SetAlarmActivity extends BaseActivity implements OnClickListener{
 
     private Alarm alarm;
     private MediaPlayer mediaPlayer;
@@ -145,22 +145,22 @@ public class SetAlarmActivity extends AppCompatActivity implements OnClickListen
             Log.v("asasas", day.toString());
             switch (day) {
                 case MONDAY:
-                    selectedDays[6] = true;
-                    break;
-                case TUESDAY:
                     selectedDays[1] = true;
                     break;
-                case WEDNESDAY:
+                case TUESDAY:
                     selectedDays[2] = true;
                     break;
-                case THURSDAY:
+                case WEDNESDAY:
                     selectedDays[3] = true;
                     break;
-                case FRIDAY:
+                case THURSDAY:
                     selectedDays[4] = true;
                     break;
-                case SATURDAY:
+                case FRIDAY:
                     selectedDays[5] = true;
+                    break;
+                case SATURDAY:
+                    selectedDays[6] = true;
                     break;
                 case SUNDAY:
                     selectedDays[0] = true;
@@ -171,12 +171,12 @@ public class SetAlarmActivity extends AppCompatActivity implements OnClickListen
     }
 
     private void setSelectDays(boolean selectedDays[]) {
-        btn_T2.setSelected(selectedDays[6]);
-        btn_T3.setSelected(selectedDays[1]);
-        btn_T4.setSelected(selectedDays[2]);
-        btn_T5.setSelected(selectedDays[3]);
-        btn_T6.setSelected(selectedDays[4]);
-        btn_T7.setSelected(selectedDays[5]);
+        btn_T2.setSelected(selectedDays[1]);
+        btn_T3.setSelected(selectedDays[2]);
+        btn_T4.setSelected(selectedDays[3]);
+        btn_T5.setSelected(selectedDays[4]);
+        btn_T6.setSelected(selectedDays[5]);
+        btn_T7.setSelected(selectedDays[6]);
         btn_CN.setSelected(selectedDays[0]);
     }
 
@@ -341,35 +341,32 @@ public class SetAlarmActivity extends AppCompatActivity implements OnClickListen
                 break;
 
             case R.id.btn_T2:
-
-                selectedDays[6] = !selectedDays[6];
-                btn_T2.setSelected(selectedDays[6]);
-
-
+                selectedDays[1] = !selectedDays[1];
+                btn_T2.setSelected(selectedDays[1]);
                 break;
             case R.id.btn_T3:
-                selectedDays[1] = !selectedDays[1];
-                btn_T3.setSelected(selectedDays[1]);
+                selectedDays[2] = !selectedDays[2];
+                btn_T3.setSelected(selectedDays[2]);
 
                 break;
             case R.id.btn_T4:
-                selectedDays[2] = !selectedDays[2];
-                btn_T4.setSelected(selectedDays[2]);
+                selectedDays[3] = !selectedDays[3];
+                btn_T4.setSelected(selectedDays[3]);
 
                 break;
             case R.id.btn_T5:
-                selectedDays[3] = !selectedDays[3];
-                btn_T5.setSelected(selectedDays[3]);
+                selectedDays[4] = !selectedDays[4];
+                btn_T5.setSelected(selectedDays[4]);
 
                 break;
             case R.id.btn_T6:
-                selectedDays[4] = !selectedDays[4];
-                btn_T6.setSelected(selectedDays[4]);
+                selectedDays[5] = !selectedDays[5];
+                btn_T6.setSelected(selectedDays[5]);
 
                 break;
             case R.id.btn_T7:
-                selectedDays[5] = !selectedDays[5];
-                btn_T7.setSelected(selectedDays[5]);
+                selectedDays[6] = !selectedDays[6];
+                btn_T7.setSelected(selectedDays[6]);
 
                 break;
             case R.id.btn_CN:
@@ -397,7 +394,7 @@ public class SetAlarmActivity extends AppCompatActivity implements OnClickListen
                 } else {
                     Database.update(getMathAlarm());
                 }
-                //callMathAlarmScheduleService();
+                callMathAlarmScheduleService();
                 Toast.makeText(this, getMathAlarm().getTimeUntilNextAlarmMessage(), Toast.LENGTH_LONG).show();
                 finish();
 
