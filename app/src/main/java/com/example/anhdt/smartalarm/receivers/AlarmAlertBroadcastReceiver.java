@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.anhdt.smartalarm.activities.CaculateActivity;
+import com.example.anhdt.smartalarm.challenges.recognize.activities.EmotionActivity;
 import com.example.anhdt.smartalarm.models.Alarm;
 import com.example.anhdt.smartalarm.utils.StaticWakeLock;
 
@@ -28,7 +29,7 @@ public class AlarmAlertBroadcastReceiver extends BroadcastReceiver {
 
         Intent mathAlarmAlertActivityIntent;
 
-        mathAlarmAlertActivityIntent = new Intent(context, CaculateActivity.class);
+        mathAlarmAlertActivityIntent = new Intent(context, EmotionActivity.class);
 
         mathAlarmAlertActivityIntent.putExtra("alarm", alarm);
 
