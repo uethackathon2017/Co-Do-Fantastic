@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service android:name=".services.GPSTracker" />
+
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,7 +47,8 @@
 
         <activity android:name=".challenges.countstep.activities.CountStepActivity" />
         <activity android:name=".challenges.recognize.activities.SelectImageActivity" />
-        <activity android:name=".challenges.recognize.activities.EmotionActivity">
+        <activity android:name=".challenges.recognize.activities.EmotionActivity"></activity>
+        <activity android:name=".activities.WakeUpActivity">
 
         </activity>
     </application>
