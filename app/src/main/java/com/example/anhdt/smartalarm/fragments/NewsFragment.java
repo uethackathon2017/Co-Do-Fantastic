@@ -282,12 +282,6 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(
-                    getContext());
-            pDialog.setMessage("Loading recent articles...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show();
         }
 
         /**
@@ -324,56 +318,57 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
          * **/
         protected void onPostExecute(String args) {
             // dismiss the dialog after getting all products
-            pDialog.dismiss();
+            if (rssItems.size() > 0) {
+                Picasso.with(activity)
+                        .load(rssItems.get(0).getDescription())
+                        .into(iView1);
+                news1Title.setText(rssItems.get(0).getTitle());
+                //news1Date.setText(rssItems.get(0).getPubdate());
+                Picasso.with(activity)
+                        .load(rssItems.get(1).getDescription())
+                        .into(iView2);
+                news2Title.setText(rssItems.get(1).getTitle());
+                //news2Date.setText(rssItems.get(1).getPubdate());
+                Picasso.with(activity)
+                        .load(rssItems.get(2).getDescription())
+                        .into(iView3);
+                news3Title.setText(rssItems.get(2).getTitle());
+                //news3Date.setText(rssItems.get(2).getPubdate());
+                relaytiveNews1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent in = new Intent(getContext(), DisPlayWebPageActivity.class);
 
-            Picasso.with(activity)
-                    .load(rssItems.get(0).getDescription())
-                    .into(iView1);
-            news1Title.setText(rssItems.get(0).getTitle());
-            //news1Date.setText(rssItems.get(0).getPubdate());
-            Picasso.with(activity)
-                    .load(rssItems.get(1).getDescription())
-                    .into(iView2);
-            news2Title.setText(rssItems.get(1).getTitle());
-            //news2Date.setText(rssItems.get(1).getPubdate());
-            Picasso.with(activity)
-                    .load(rssItems.get(2).getDescription())
-                    .into(iView3);
-            news3Title.setText(rssItems.get(2).getTitle());
-            //news3Date.setText(rssItems.get(2).getPubdate());
-            relaytiveNews1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent in = new Intent(getContext(), DisPlayWebPageActivity.class);
+                        // getting page url
+                        String page_url = rssItems.get(0).getLink();
+                        in.putExtra("page_url", page_url);
+                        startActivity(in);
+                    }
+                });
+                relaytiveNews2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent in = new Intent(getContext(), DisPlayWebPageActivity.class);
 
-                    // getting page url
-                    String page_url = rssItems.get(0).getLink();
-                    in.putExtra("page_url", page_url);
-                    startActivity(in);
-                }
-            });
-            relaytiveNews2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent in = new Intent(getContext(), DisPlayWebPageActivity.class);
+                        // getting page url
+                        String page_url = rssItems.get(1).getLink();
+                        in.putExtra("page_url", page_url);
+                        startActivity(in);
+                    }
+                });
+                relaytiveNews3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent in = new Intent(getContext(), DisPlayWebPageActivity.class);
 
-                    // getting page url
-                    String page_url = rssItems.get(1).getLink();
-                    in.putExtra("page_url", page_url);
-                    startActivity(in);
-                }
-            });
-            relaytiveNews3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent in = new Intent(getContext(), DisPlayWebPageActivity.class);
+                        // getting page url
+                        String page_url = rssItems.get(2).getLink();
+                        in.putExtra("page_url", page_url);
+                        startActivity(in);
+                    }
+                });
+            }
 
-                    // getting page url
-                    String page_url = rssItems.get(2).getLink();
-                    in.putExtra("page_url", page_url);
-                    startActivity(in);
-                }
-            });
         }
     }
 }
