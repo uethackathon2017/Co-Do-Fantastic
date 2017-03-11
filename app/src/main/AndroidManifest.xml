@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -19,14 +20,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service android:name=".services.GPSTracker" />
-        <activity android:name=".activities.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".activities.MainActivity">
+
         </activity>
-        <activity android:name=".activities.SetAlarmActivity" />
+        <activity android:name=".activities.SetAlarmActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
 
         <receiver android:name=".receivers.AlarmServiceBroadcastReciever">
             <intent-filter>
@@ -48,8 +47,13 @@
 
         <activity android:name=".challenges.countstep.activities.CountStepActivity" />
         <activity android:name=".challenges.recognize.activities.SelectImageActivity" />
-        <activity android:name=".challenges.recognize.activities.EmotionActivity">
+        <activity android:name=".challenges.recognize.activities.EmotionActivity"></activity>
+        <activity android:name=".activities.WakeUpActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

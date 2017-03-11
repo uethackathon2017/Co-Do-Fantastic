@@ -41,7 +41,7 @@ public class Alarm implements Serializable{
         }
     }
 
-    public enum Challange{
+    public enum Challenge{
         WALKING,
         CALCULATION,
         RECOGNIZE;
@@ -54,7 +54,7 @@ public class Alarm implements Serializable{
                 case 1:
                     return "Thử thách tính toán";
                 case 2:
-                    return "Thử thách nhận dạng";
+                    return "Thử thách chụp ảnh";
             }
             return super.toString();
         }
@@ -100,6 +100,7 @@ public class Alarm implements Serializable{
     private Boolean vibrate = true;
     private String alarmName = "Alarm Clock";
     private Difficulty difficulty = Difficulty.EASY;
+    private Challenge challenge = Challenge.CALCULATION;
 
     public Alarm() {
 
@@ -258,6 +259,14 @@ public class Alarm implements Serializable{
 
     public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public Challenge getChallenge() {
+        return challenge;
+    }
+
+    public void setChallenge(Challenge challenge) {
+        this.challenge = challenge;
     }
 
     public int getId() {

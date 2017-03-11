@@ -9,7 +9,9 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.CountDownTimer;
+import android.provider.OpenableColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,9 +24,11 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.bumptech.glide.GenericTranscodeRequest;
 import com.example.anhdt.smartalarm.R;
 import com.example.anhdt.smartalarm.database.Database;
 import com.example.anhdt.smartalarm.models.Alarm;
+import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Field;
 import java.util.Calendar;
@@ -106,16 +110,31 @@ public class SetAlarmActivity extends BaseActivity implements OnClickListener{
         btn_T7 = (TextView) findViewById(R.id.btn_T7);
         btn_CN = (TextView) findViewById(R.id.btn_CN);
 
-        if (alarm.getId() > 0) {
-            setSelectedDaysIfExistAlarm();
-        }
-        setSelectDays(selectedDays);
-
         edTypeLabel = (EditText) findViewById(R.id.edTypeLabel);
         relativeChooseRingtone = (RelativeLayout) findViewById(R.id.relativeChooseRingTone);
         tvChosenRingtone = (TextView) findViewById(R.id.text_chose_ringstone_music);
 
         saveSetting = (RelativeLayout) findViewById(R.id.Save_Setting_Alarm);
+
+        if (getMathAlarm().getId() > 0) {
+            setSelectedDaysIfExistAlarm();
+            edTypeLabel.setText(getMathAlarm().getAlarmName());
+        }
+        else {
+            getMathAlarm().setChallenge(Alarm.Challenge.CALCULATION);
+            if (alarmTones.length > 1) {
+                getMathAlarm().setAlarmTonePath(alarmTonePaths[1]);
+            }
+            else {
+                getMathAlarm().setAlarmTonePath(alarmTonePaths[0]);
+            }
+        }
+        tvChallengeName.setText(getMathAlarm().getChallenge().toString());
+        Uri uri = Uri.parse(getMathAlarm().getAlarmTonePath());
+        tvChosenRingtone.setText(getFileName(uri));
+        setSelectDays(selectedDays);
+
+
 
     }
 
@@ -182,6 +201,15 @@ public class SetAlarmActivity extends BaseActivity implements OnClickListener{
 
     private void handleTimePicker() {
 
+        if (getMathAlarm().getId() > 0 && android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            timePicker.setCurrentHour(getMathAlarm().getAlarmTime().get(Calendar.HOUR_OF_DAY));
+            timePicker.setCurrentMinute(getMathAlarm().getAlarmTime().get(Calendar.MINUTE));
+        }
+        else if (getMathAlarm().getId() > 0 && android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1){
+            timePicker.setHour(getMathAlarm().getAlarmTime().get(Calendar.HOUR_OF_DAY));
+            timePicker.setMinute(getMathAlarm().getAlarmTime().get(Calendar.MINUTE));
+        }
+
         timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
@@ -190,6 +218,8 @@ public class SetAlarmActivity extends BaseActivity implements OnClickListener{
                 now.set(Calendar.MINUTE, minute);
                 now.set(Calendar.SECOND, 0);
                 alarm.setAlarmTime(now);
+
+
             }
         });
 
@@ -201,16 +231,38 @@ public class SetAlarmActivity extends BaseActivity implements OnClickListener{
 
         AlertDialog.Builder alert;
         alert = new AlertDialog.Builder(this);
-        Alarm.Challange[] items = Alarm.Challange.values();
+        Alarm.Challenge[] items = Alarm.Challenge.values();
         alert.setTitle("Chọn thử thách");
         alert.setItems(listChallange, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Log.v("SetAlarmActivity", listChallange[which]);
+                getMathAlarm().setChallenge(Alarm.Challenge.values()[which]);
                 tvChallengeName.setText(listChallange[which]);
             }
         });
         alert.show();
+    }
+
+    public String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
     }
 
     private void chooseRingtone() {
@@ -386,7 +438,7 @@ public class SetAlarmActivity extends BaseActivity implements OnClickListener{
                         alarm.addDay(days[i]);
                     }
                 }
-
+                alarm.setChallenge(getMathAlarm().getChallenge());
                 alarm.setDifficulty(Alarm.Difficulty.EASY);
                 Database.init(getApplicationContext());
                 if (getMathAlarm().getId() < 1) {
