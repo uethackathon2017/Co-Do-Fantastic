@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/tab_main"
-    android:background="@mipmap/background_application">
+    >
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_alarm"
@@ -16,6 +16,10 @@
         android:src="@mipmap/ic_add_alarm"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"/>
-    <include
-        layout="@layout/item_alarm"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleListAlarm"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/add_alarm"/>
 </RelativeLayout>
