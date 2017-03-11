@@ -6,11 +6,99 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/liner_weather"
+            android:weightSum="4"
+            android:layout_height="200dp">
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/liner_location"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/imv_location"
+                    android:src="@mipmap/gps_receiving_32"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:textSize="15sp"
+                    android:layout_alignLeft="@id/imv_location"
+                    android:id="@+id/txv_location_name"
+                    android:textColor="@android:color/white"
+                    android:text="Hà Nội"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:id="@+id/relative_temper"
+                android:layout_below="@id/liner_location"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:src="@mipmap/snow_64"
+                    android:id="@+id/imv_weather"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:textSize="26sp"
+                    android:layout_toRightOf="@+id/imv_weather"
+                    android:id="@+id/txv_temperature"
+                    android:textColor="@android:color/white"
+                    android:text="20 độ C"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Có sương"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:id="@+id/txv_description"
+                android:layout_below="@id/relative_temper"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Độ ẩm : 100%"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/txv_humidity"
+                android:layout_below="@id/txv_description"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Tốc độ gió : 1.61 mps"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/txv_speed"
+                android:layout_below="@id/txv_humidity"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
         <RelativeLayout
             android:id="@+id/news_head"
+            android:layout_below="@id/liner_weather"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
