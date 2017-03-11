@@ -165,7 +165,9 @@
             android:layout_below="@id/news_head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
             android:background="#26ffffff">
             <TextView
                 android:id="@+id/tv_continues"
@@ -358,6 +360,26 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/relaytive_news_title"
+            android:layout_below="@id/relaytive_thugon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:background="#26ffffff">
+            <TextView
+                android:id="@+id/news_title"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="7dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tin tức nổi bật"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"/>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/relaytive_news"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -365,136 +387,86 @@
             android:layout_marginRight="3dp"
             android:background="#26ffffff"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/relaytive_thugon"
+            android:layout_below="@id/relaytive_news_title"
             >
             <RelativeLayout
                 android:id="@+id/relaytive_news_1"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="300dp"
                 android:layout_margin="6dp"
                 android:layout_centerHorizontal="true"
-                android:background="#90CAF9"
                 >
-                <TextView
-                    android:id="@+id/news_title_1"
-                    android:layout_centerHorizontal="true"
-                    android:layout_margin="7dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tin tức nổi bật"
-                    android:textColor="@android:color/white"/>
+
                 <ImageView
-                    android:layout_below="@id/news_title_1"
                     android:id="@+id/image_news_1"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    />
+
                 <TextView
                     android:id="@+id/news_1_Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="Giáo dục"
                     android:textStyle="bold"
                     android:textColor="@android:color/white"
-                    android:layout_centerVertical="true"/>
-                <TextView
-                    android:id="@+id/news_1_Date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="11/03/2017"
-                    android:layout_below="@id/news_1_Title"
-                    android:textColor="@android:color/holo_red_light"
-                    android:layout_centerVertical="true"/>
+                    android:layout_alignParentBottom="true"
+                    android:textSize="18sp"
+                    android:padding="10dp"
+                    android:background="#25000000"/>
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/relaytive_news_2"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="300dp"
                 android:layout_margin="6dp"
                 android:layout_marginBottom="10dp"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/relaytive_news_1"
-                android:background="#B39DDB"
                 >
-                <TextView
-                    android:id="@+id/news_title_2"
-                    android:layout_centerHorizontal="true"
-                    android:layout_margin="7dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tin tức nổi bật"
-                    android:textColor="@android:color/white"/>
                 <ImageView
-                    android:layout_below="@id/news_title_2"
                     android:id="@+id/image_news_2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
                 <TextView
                     android:id="@+id/news_2_Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="Giáo dục"
-
                     android:textStyle="bold"
                     android:textColor="@android:color/white"
-                    android:layout_centerVertical="true"/>
-                <TextView
-                    android:id="@+id/news_2_Date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="11/03/2017"
-                    android:layout_below="@id/news_2_Title"
-                    android:textColor="@android:color/holo_red_light"
-                    android:layout_centerVertical="true"/>
+                    android:layout_alignParentBottom="true"
+                    android:padding="10dp"
+                    android:textSize="18sp"
+                    android:background="#25000000"/>
+
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/relaytive_news_3"
                 android:layout_width="match_parent"
                 android:layout_below="@id/relaytive_news_2"
-                android:background="#9CCC65"
-                android:layout_height="120dp"
+                android:layout_height="300dp"
                 android:layout_margin="6dp"
                 android:layout_centerHorizontal="true"
                 >
-                <TextView
-                    android:id="@+id/news_title_3"
-                    android:layout_centerHorizontal="true"
-                    android:layout_margin="7dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tin tức nổi bật"
-                    android:textColor="@android:color/white"/>
+
                 <ImageView
-                    android:layout_below="@id/news_title_3"
                     android:id="@+id/image_news_3"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
                 <TextView
                     android:id="@+id/news_3_Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="Giáo dục"
                     android:textStyle="bold"
-                    android:textColor="@android:color/white"                    android:layout_centerVertical="true"/>
-                <TextView
-                    android:id="@+id/news_3_Date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="11/03/2017"
-                    android:layout_below="@id/news_3_Title"
-                    android:textColor="@android:color/holo_red_light"
-                    android:layout_centerVertical="true"/>
+                    android:textColor="@android:color/white"
+                    android:layout_alignParentBottom="true"
+                    android:padding="10dp"
+                    android:textSize="18sp"
+                    android:background="#25000000"/>
+
             </RelativeLayout>
 
 
