@@ -1,4 +1,4 @@
-package com.example.anhdt.smartalarm.countstep.accelerometer;
+package com.example.anhdt.smartalarm.challenges.countstep.accelerometer;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;

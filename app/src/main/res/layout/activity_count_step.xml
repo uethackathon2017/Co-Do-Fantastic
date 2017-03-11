@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:id="@+id/activity_main_layout"
     android:background="@mipmap/background_application"
-    tools:context=".countstep.activities.CountStepActivity">
+    tools:context=".challenges.countstep.activities.CountStepActivity">
 
     <!-- Main toolbar -->
 

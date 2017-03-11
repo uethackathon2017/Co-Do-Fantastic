@@ -13,7 +13,7 @@
         <item name="android:headerBackground">@android:color/transparent</item>
         <item name="android:amPmTextColor">#ffffff</item>
         <item name="android:textColorPrimary">#ffffff</item>
-
+        <item name="android:timePickerMode">spinner</item>
     </style>
 
 </resources>
