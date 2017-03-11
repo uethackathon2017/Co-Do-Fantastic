@@ -1,4 +1,4 @@
-package com.example.anhdt.smartalarm.challenges.recognize.helper;
+package com.example.anhdt.smartalarm.challenges.recognize.activities;
 
 import android.content.Intent;
 import android.net.Uri;

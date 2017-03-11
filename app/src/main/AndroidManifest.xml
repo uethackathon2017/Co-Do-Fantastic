@@ -44,8 +44,8 @@
         <receiver android:name=".receivers.AlarmAlertBroadcastReceiver" />
 
         <activity android:name=".challenges.countstep.activities.CountStepActivity" />
-        <activity android:name=".challenges.recognize.helper.SelectImageActivity" />
-        <activity android:name=".challenges.recognize.activities.DescribeActivity">
+        <activity android:name=".challenges.recognize.activities.SelectImageActivity" />
+        <activity android:name=".challenges.recognize.activities.EmotionActivity">
 
         </activity>
     </application>
