@@ -3,12 +3,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="#ffffff">
+    android:background="@mipmap/background_application">
     
     <!-- Header -->
     <RelativeLayout
         android:id="@+id/header"
-        android:background="#ffffff"
+        android:background="@android:color/transparent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:text="Thời Trang"
             android:textSize="25dp"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
  
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:divider="#bababa"
         android:dividerHeight="1dp"
-        android:background="#ffffff" 
+        android:background="@android:color/transparent"
         android:cacheColorHint="#00000000"/>
  
 </RelativeLayout>

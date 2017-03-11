@@ -18,6 +18,7 @@ import com.example.anhdt.smartalarm.R;
 import com.example.anhdt.smartalarm.adapters.RSSParser;
 import com.example.anhdt.smartalarm.models.RSSFeed;
 import com.example.anhdt.smartalarm.models.RSSItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,9 +48,9 @@ public class ListNewsActivity extends ListActivity {
     TextView Title;
     String link_Title,text_Title;
 
-    public ListNewsActivity(String link_Title,String text_Title) {
-        this.link_Title = link_Title;
-        this.text_Title = text_Title;
+    public ListNewsActivity() {
+
+
     }
 
     private static String TAG_TITLE = "title";
@@ -69,7 +70,7 @@ public class ListNewsActivity extends ListActivity {
         // Getting Single website from SQLite
 
         Title = (TextView) findViewById(R.id.title_Page) ;
-        Title.setText(text_Title);
+        Title.setText(getIntent().getStringExtra("Title"));
         btn_back = (ImageView) findViewById(R.id.btn_back);
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +78,7 @@ public class ListNewsActivity extends ListActivity {
                 onBackPressed();
             }
         });
-        String rss_link = link_Title;
+        String rss_link = getIntent().getStringExtra("page_url");
         new loadRSSFeedItems().execute(rss_link);
 
         // selecting single ListView item
@@ -139,8 +140,9 @@ public class ListNewsActivity extends ListActivity {
                 map.put(TAG_PUB_DATE, item.getPubdate()); // If you want parse the date
                 String description = item.getDescription();
                 // taking only 200 chars from description
-                if(description.length() > 100){
-                    description = description.substring(0, 97) + "..";
+                if (description.contains("_180x108")) {
+                    description = description.replace("_180x108", "");
+                    item.setDescription(description);
                 }
                 map.put(TAG_DESRIPTION, description);
 
@@ -154,13 +156,29 @@ public class ListNewsActivity extends ListActivity {
                     /**
                      * Updating parsed items into listview
                      * */
-                    ListAdapter adapter = new SimpleAdapter(
+                    SimpleAdapter adapter = new SimpleAdapter(
                             ListNewsActivity.this,
                             rssItemList, R.layout.rss_item_list_row,
-                            new String[] { TAG_LINK, TAG_TITLE, TAG_PUB_DATE, TAG_DESRIPTION },
-                            new int[] { R.id.page_url, R.id.title, R.id.pub_date, R.id.link });
+                            new String[] { TAG_LINK, TAG_TITLE, TAG_DESRIPTION },
+                            new int[] { R.id.page_url, R.id.news_Title , R.id.image_news });
 
                     // updating listview
+
+                    adapter.setViewBinder(new SimpleAdapter.ViewBinder() {
+                        @Override
+                        public boolean setViewValue(View view, Object data, String textRepresentation) {
+                            if(view.getId() == R.id.image_news) {
+                                ImageView imageView = (ImageView) view;
+                                Picasso.with(ListNewsActivity.this)
+                                        .load((String)data)
+                                        .resize(250,250)
+                                        .centerCrop()
+                                        .into(imageView);
+                                return true;
+                            }
+                            return false;
+                        }
+                    });
                     setListAdapter(adapter);
                 }
             });
