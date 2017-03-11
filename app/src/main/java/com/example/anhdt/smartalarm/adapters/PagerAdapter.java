@@ -27,8 +27,6 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return new MainFragment();
             case 1:
-                return new WeatherFragment();
-            case 2:
                 return new NewsFragment();
             default:
                 return null;
@@ -46,9 +44,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return "Báo thức";
             case 1:
-                return "Thời tiết";
-            case 2:
-                return "Tin tức";
+                return "Thời tiết & Tin tức";
             default:
                 return null;
         }

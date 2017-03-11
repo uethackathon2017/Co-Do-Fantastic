@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/black"
+    android:minWidth="300dp"
+    android:orientation="vertical"
+    android:padding="10dp"
+
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/shape_button_dialog"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:text="Thông báo"
+        android:textColor="@android:color/white"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Hết thời gian"
+        android:textColor="@android:color/white"
+        android:textSize="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Cuộc chơi kết thúc!"
+        android:textColor="@android:color/white"
+        android:textSize="15dp" />
+
+    <Button
+        android:id="@+id/bt_ok_end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/atp__btn_template"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="OK"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:textSize="13dp"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

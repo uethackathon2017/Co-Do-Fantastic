@@ -22,7 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.SetAlarmActivity"/>
+        <activity android:name=".activities.SetAlarmActivity" />
 
         <receiver android:name=".receivers.AlarmServiceBroadcastReciever">
             <intent-filter>
@@ -35,10 +35,17 @@
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:process="com.example.anhdt.serviceProcess" />
-        <activity android:name=".activities.ListNewsActivity"></activity>
+
+        <activity android:name=".activities.ListNewsActivity" />
         <activity android:name=".activities.DisPlayWebPageActivity" />
-        <activity android:name=".activities.CaculateActivity"/>
+        <activity android:name=".activities.CaculateActivity" />
+
         <receiver android:name=".receivers.AlarmAlertBroadcastReceiver" />
+
+        <activity android:name=".countstep.activities.CountStepActivity">
+
+
+        </activity>
     </application>
 
 </manifest>

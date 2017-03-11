@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/activity_main_layout"
+    android:background="@mipmap/background_application"
+    tools:context=".countstep.activities.CountStepActivity">
+
+    <!-- Main toolbar -->
+
+
+    <!-- Main actions -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/container_layout"
+        android:weightSum="10">
+
+        <!-- Controls-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/controls_layout"
+            android:layout_weight="2">
+
+            <!-- buttons, sliders -->
+            <LinearLayout
+                android:id="@+id/user_interaction_layout"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:weightSum="3"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:text="THỬ THÁCH VẬN ĐỘNG"
+                    android:textColor="@android:color/white"
+                    android:layout_gravity="center"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!-- Information layout -->
+            <LinearLayout
+                android:id="@+id/info_layout"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:weightSum="4">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textColor="@android:color/white"
+                    android:text="@string/time_val"
+                    android:textSize="18sp"
+                    android:textAlignment="center"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white"
+                    android:layout_height="match_parent"
+                    android:id="@+id/timeVal_textView"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_weight="7"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_height="0dp">
+
+            <com.github.lzyzsd.circleprogress.ArcProgress
+                android:id="@+id/arc_progress"
+                android:layout_marginTop="35dp"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                custom:arc_progress="55"
+                android:layout_gravity="center"
+                custom:arc_bottom_text="MEMORY"
+                custom:arc_text_color="@android:color/white"
+                custom:arc_finished_color="@android:color/holo_orange_light"
+                custom:arc_suffix_text=" /40"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
