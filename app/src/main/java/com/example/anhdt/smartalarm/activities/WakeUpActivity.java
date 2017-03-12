@@ -77,7 +77,7 @@ public class WakeUpActivity extends AppCompatActivity implements View.OnClickLis
     private RelativeLayout relaytiveNews3;
     private ImageView imageNews3;
     private TextView news3Title;
-    private RelativeLayout relaytiveContinuesHome;
+    private RelativeLayout relaytiveContinuesHome,relaytive_Home;
     private TextView tvContinuesHome;
     RSSParser rssParser = new RSSParser();
 
@@ -91,7 +91,7 @@ public class WakeUpActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_wake_up);
 
         gpsTracker = new GPSTracker(this, this, this);
-
+        relaytive_Home = (RelativeLayout) findViewById(R.id.relaytive_Home);
         imv_update = (ImageView) findViewById(R.id.imv_reload);
         txv_update = (TextView) findViewById(R.id.txv_update);
         txvTemperature = (TextView) findViewById(R.id.txv_temperature);
@@ -121,6 +121,7 @@ public class WakeUpActivity extends AppCompatActivity implements View.OnClickLis
         tvContinuesHome = (TextView) findViewById(R.id.tv_continues_home);
 
         relaytiveContinuesHome.setOnClickListener(this);
+        relaytive_Home.setOnClickListener(this);
         relaytiveNews3.setOnClickListener(this);
         relaytiveNews2.setOnClickListener(this);
         relaytiveNews1.setOnClickListener(this);
@@ -271,7 +272,10 @@ public class WakeUpActivity extends AppCompatActivity implements View.OnClickLis
         Intent in;
         String page_url;
         switch (view.getId()) {
-
+            case R.id.relaytive_Home:
+                Intent intent = new Intent(this,MainActivity.class);
+                startActivity(intent);
+                break;
             case R.id.imv_reload:
 //                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 //                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);

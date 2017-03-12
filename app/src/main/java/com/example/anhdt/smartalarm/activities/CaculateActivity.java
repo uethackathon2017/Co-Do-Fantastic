@@ -86,19 +86,9 @@ public class CaculateActivity extends BaseActivity implements View.OnClickListen
         answerView = (TextView) findViewById(R.id.textView2);
         answerView.setText("= ?");
 
-        ((Button) findViewById(R.id.Button0)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button1)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button2)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button3)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button4)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button5)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button6)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button7)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button8)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button9)).setOnClickListener(this);
+
         ((Button) findViewById(R.id.Button_clear)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button_decimal)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button_minus)).setOnClickListener(this);
+
     }
 
     @Override
