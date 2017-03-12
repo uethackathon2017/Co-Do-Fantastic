@@ -40,7 +40,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:hint="Kết quả"
-
             android:background="#26ffffff"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@android:color/white" />
@@ -57,23 +56,12 @@
         android:layout_weight="1"
         android:tag="submit"
         android:text="Xác Nhận"
-        android:layout_marginBottom="49dp"
+        android:layout_marginBottom="21dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_alignBottom="@+id/Button_clear"
-        />
-
-    <Button
-        android:id="@+id/Button_clear"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="20dp"
-        android:layout_weight="1"
-        android:tag="clear"
-        android:text="clear"
-        android:layout_marginBottom="14dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignStart="@+id/tableRow1" />
+
 
 
 
