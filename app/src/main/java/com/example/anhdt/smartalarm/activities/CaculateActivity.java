@@ -144,6 +144,8 @@ public class CaculateActivity extends BaseActivity implements View.OnClickListen
 
             if(mathProblem.getAnswer() == KQ){
                 alarmActive = false;
+                Intent intent = new Intent(this,WakeUpActivity.class);
+                startActivity(intent);
                 stopService(playIntent);
                 this.finish();
             }
