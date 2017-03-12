@@ -129,6 +129,26 @@
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
                 android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:id="@+id/imv_reload"
+                android:layout_below="@+id/txv_speed"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/sinchronize_32"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Cập nhật lúc : 12:00:00"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/txv_update"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/imv_reload"
+                android:layout_below="@id/txv_speed"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_height="wrap_content" />
 
         </RelativeLayout>
 
