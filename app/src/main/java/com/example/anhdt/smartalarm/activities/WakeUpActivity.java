@@ -125,7 +125,6 @@ public class WakeUpActivity extends AppCompatActivity implements View.OnClickLis
         relaytiveNews3.setOnClickListener(this);
         relaytiveNews2.setOnClickListener(this);
         relaytiveNews1.setOnClickListener(this);
-        imv_update.setOnClickListener(this);
         initHashMapWeatherConditon();
         initHashMapWeatherConditionDescriotion();
         init();
@@ -149,7 +148,6 @@ public class WakeUpActivity extends AppCompatActivity implements View.OnClickLis
                 txvTemperature.setText("" + Math.round((weather1.temperature.getTemp() - 273.15)) + " độ C");
                 txvHumidity.setText(HUMIDITY + "" + weather1.currentCondition.getHumidity() + "%");
                 txvSpeed.setText(SPEED + "" + weather1.wind.getSpeed() + " mps");
-                txv_update.setText("Cập nhật lúc : " + weather1.currentCondition.getTime());
             }
             Toast.makeText(this,"Kiểm tra kết nối Internet của bạn",Toast.LENGTH_SHORT).show();
 
