@@ -22,7 +22,11 @@
         <service android:name=".services.GPSTracker" />
 
         <activity android:name=".activities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".activities.SetAlarmActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
@@ -56,11 +60,7 @@
         <activity android:name=".challenges.recognize.activities.SelectImageActivity" />
         <activity android:name=".challenges.recognize.activities.EmotionActivity"></activity>
         <activity android:name=".activities.WakeUpActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

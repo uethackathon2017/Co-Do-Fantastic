@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.anhdt.smartalarm.R;
+import com.example.anhdt.smartalarm.activities.WakeUpActivity;
 import com.example.anhdt.smartalarm.challenges.countstep.accelerometer.AccelerometerDetector;
 import com.example.anhdt.smartalarm.challenges.countstep.accelerometer.AccelerometerProcessing;
 import com.example.anhdt.smartalarm.challenges.countstep.accelerometer.OnStepCountChangeListener;
@@ -72,14 +73,7 @@ public class CountStepActivity extends AppCompatActivity {
                     mTimeValTextView.setText(msg.arg1 + "");
                     if (msg.arg1 == 0) {
                         if (mStepCount >= NUMBER_MAX_STEP) {
-                            myDialogEndTime.show();
-                            Handler handlerShow = new Handler();
-                            handlerShow.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    myDialogEndTime.dismiss();
-                                }
-                            }, 4000);
+
                             stopService(playIntent);
                             CountStepActivity.this.finish();
                         }
@@ -136,6 +130,8 @@ public class CountStepActivity extends AppCompatActivity {
                 ++mStepCount;
                 //mStepCountTextView.setText(String.valueOf(mStepCount) + "/" + String.valueOf(NUMBER_MAX_STEP) );
                 if(arcProgress.getProgress() == NUMBER_MAX_STEP){
+                    Intent intent = new Intent(CountStepActivity.this, WakeUpActivity.class);
+                    startActivity(intent);
                     stopService(playIntent);
                     CountStepActivity.this.finish();
                 }
