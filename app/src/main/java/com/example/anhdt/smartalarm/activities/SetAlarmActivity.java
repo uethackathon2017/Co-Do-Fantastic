@@ -161,7 +161,6 @@ public class SetAlarmActivity extends BaseActivity implements OnClickListener{
     private void setSelectedDaysIfExistAlarm() {
         Alarm.Day[] days = alarm.getDays();
         for (Alarm.Day day: days) {
-            Log.v("asasas", day.toString());
             switch (day) {
                 case MONDAY:
                     selectedDays[1] = true;
@@ -428,6 +427,64 @@ public class SetAlarmActivity extends BaseActivity implements OnClickListener{
             case R.id.Save_Setting_Alarm:
                 alarm.setAlarmName(edTypeLabel.getText().toString());
                 Alarm.Day[] days = Alarm.Day.values();
+
+                Calendar time = Calendar.getInstance();
+                time.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
+                time.set(Calendar.MINUTE, timePicker.getCurrentMinute());
+                Calendar now = Calendar.getInstance();
+                if (time.after(now)) {
+                    switch (now.get(Calendar.DAY_OF_WEEK)) {
+                        case Calendar.MONDAY:
+                            selectedDays[1] = true;
+                            break;
+                        case Calendar.TUESDAY:
+                            selectedDays[2] = true;
+                            break;
+                        case Calendar.WEDNESDAY:
+                            selectedDays[3] = true;
+                            break;
+                        case Calendar.THURSDAY:
+                            selectedDays[4] = true;
+                            break;
+                        case Calendar.FRIDAY:
+                            selectedDays[5] = true;
+                            break;
+                        case Calendar.SATURDAY:
+                            selectedDays[6] = true;
+                            break;
+                        case Calendar.SUNDAY:
+                            selectedDays[0] = true;
+                            break;
+
+                    }
+                }
+                else {
+                    switch (now.get(Calendar.DAY_OF_WEEK)) {
+                        case Calendar.MONDAY:
+                            selectedDays[2] = true;
+                            break;
+                        case Calendar.TUESDAY:
+                            selectedDays[3] = true;
+                            break;
+                        case Calendar.WEDNESDAY:
+                            selectedDays[4] = true;
+                            break;
+                        case Calendar.THURSDAY:
+                            selectedDays[5] = true;
+                            break;
+                        case Calendar.FRIDAY:
+                            selectedDays[6] = true;
+                            break;
+                        case Calendar.SATURDAY:
+                            selectedDays[0] = true;
+                            break;
+                        case Calendar.SUNDAY:
+                            selectedDays[1] = true;
+                            break;
+
+                    }
+                }
+
                 for (int i = 0; i < selectedDays.length; i++) {
                     alarm.removeDay(days[i]);
                     if (selectedDays[i]) {
