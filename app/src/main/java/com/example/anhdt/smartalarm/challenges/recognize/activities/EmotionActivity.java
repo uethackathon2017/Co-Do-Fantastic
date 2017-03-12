@@ -20,6 +20,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,6 +31,9 @@ import com.example.anhdt.smartalarm.R;
 import com.example.anhdt.smartalarm.activities.ListNewsActivity;
 import com.example.anhdt.smartalarm.activities.WakeUpActivity;
 import com.example.anhdt.smartalarm.challenges.recognize.helper.ImageHelper;
+import com.example.anhdt.smartalarm.models.Alarm;
+import com.example.anhdt.smartalarm.services.PlayRingToneService;
+import com.example.anhdt.smartalarm.utils.StaticWakeLock;
 import com.google.gson.Gson;
 import com.microsoft.projectoxford.emotion.EmotionServiceClient;
 import com.microsoft.projectoxford.emotion.EmotionServiceRestClient;
@@ -61,15 +66,27 @@ public class EmotionActivity extends AppCompatActivity {
     // The image selected to detect.
     private Bitmap mBitmap;
 
+    private boolean alarmActive;
+    private Intent playIntent;
     // The edit to show status and result.
     //private EditText mEditText;
 
     private EmotionServiceClient client;
 
+    private Alarm alarm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         setContentView(R.layout.activity_emotion);
+
+        Bundle bundle = this.getIntent().getExtras();
+        alarm = (Alarm) bundle.getSerializable("alarm");
 
         if (client == null) {
             client = new EmotionServiceRestClient(getString(R.string.subscription_key));
@@ -77,6 +94,34 @@ public class EmotionActivity extends AppCompatActivity {
         textViewSelectImage = (TextView) findViewById(R.id.tvSelectImage);
         mButtonSelectImage = (ImageView) findViewById(R.id.selectedImage);
         //mEditText = (EditText) findViewById(R.id.editTextResult);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(playIntent==null){
+            playIntent = new Intent(this, PlayRingToneService.class);
+            playIntent.putExtra("alarm", alarm);
+            startService(playIntent);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        alarmActive = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StaticWakeLock.lockOff(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!alarmActive)
+            super.onBackPressed();
     }
 
     public void doRecognize() {
@@ -322,12 +367,8 @@ public class EmotionActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(EmotionActivity.this, WakeUpActivity.class);
                         startActivity(intent);
+                        stopService(playIntent);
                         EmotionActivity.this.finish();
-                    }
-                })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)

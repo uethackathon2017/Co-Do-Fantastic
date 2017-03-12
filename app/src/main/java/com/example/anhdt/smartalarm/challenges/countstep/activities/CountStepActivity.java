@@ -1,6 +1,7 @@
 package com.example.anhdt.smartalarm.challenges.countstep.activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.SensorManager;
@@ -10,6 +11,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.PhoneStateListener;
@@ -24,10 +26,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.anhdt.smartalarm.R;
+import com.example.anhdt.smartalarm.activities.WakeUpActivity;
 import com.example.anhdt.smartalarm.challenges.countstep.accelerometer.AccelerometerDetector;
 import com.example.anhdt.smartalarm.challenges.countstep.accelerometer.AccelerometerProcessing;
 import com.example.anhdt.smartalarm.challenges.countstep.accelerometer.OnStepCountChangeListener;
 import com.example.anhdt.smartalarm.challenges.countstep.dialogs.MyDialogEndTime;
+import com.example.anhdt.smartalarm.challenges.recognize.activities.EmotionActivity;
 import com.example.anhdt.smartalarm.models.Alarm;
 import com.example.anhdt.smartalarm.services.PlayRingToneService;
 import com.example.anhdt.smartalarm.utils.StaticWakeLock;
@@ -72,18 +76,14 @@ public class CountStepActivity extends AppCompatActivity {
                     mTimeValTextView.setText(msg.arg1 + "");
                     if (msg.arg1 == 0) {
                         if (mStepCount >= NUMBER_MAX_STEP) {
-                            myDialogEndTime.show();
-                            Handler handlerShow = new Handler();
-                            handlerShow.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    myDialogEndTime.dismiss();
-                                }
-                            }, 4000);
-                            stopService(playIntent);
-                            CountStepActivity.this.finish();
+                            if (!CountStepActivity.this.isFinishing()) {
+                                createSuccessAlertDialog("Thông báo", "Bạn đã vượt qua thử thách thành công!");
+                            }
                         }
                         else {
+                            if (!CountStepActivity.this.isFinishing()) {
+                                createFailedAlertDialog("Thông báo", "Bạn chưa vượt qua thử thách! Hãy thử lại!");
+                            }
                             mStepCount = 0;
                             time = TIME_PLAY_EACH_QUESTION;
                         }
@@ -93,6 +93,35 @@ public class CountStepActivity extends AppCompatActivity {
             }
         }
     };
+
+    private AlertDialog createSuccessAlertDialog(String title, String content) {
+        return new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(content)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(CountStepActivity.this, WakeUpActivity.class);
+                        startActivity(intent);
+                        stopService(playIntent);
+                        CountStepActivity.this.finish();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    private AlertDialog createFailedAlertDialog(String title, String content) {
+        return new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(content)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
 
     private int time;
     // constant reference
@@ -136,8 +165,9 @@ public class CountStepActivity extends AppCompatActivity {
                 ++mStepCount;
                 //mStepCountTextView.setText(String.valueOf(mStepCount) + "/" + String.valueOf(NUMBER_MAX_STEP) );
                 if(arcProgress.getProgress() == NUMBER_MAX_STEP){
-                    stopService(playIntent);
-                    CountStepActivity.this.finish();
+                    if (!CountStepActivity.this.isFinishing()) {
+                        createSuccessAlertDialog("Thông báo", "Bạn đã vượt qua thử thách thành công!");
+                    }
                 }
                 else {
                     arcProgress.setProgress(mStepCount);

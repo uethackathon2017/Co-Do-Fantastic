@@ -61,7 +61,7 @@ public class SetAlarmActivity extends BaseActivity implements OnClickListener{
     private boolean[] selectedDays = {false, false, false, false, false, false, false};
     private String[] alarmTones;
     private String[] alarmTonePaths;
-    private String[] listChallange = {"Thử thách vận động", "Thử thách tính toán", "Thử thách nhận diện"};
+    private String[] listChallange = {"Thử thách vận động", "Thử thách tính toán", "Thử thách chụp ảnh"};
     private RelativeLayout saveSetting;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -426,11 +426,9 @@ public class SetAlarmActivity extends BaseActivity implements OnClickListener{
                 btn_CN.setSelected(selectedDays[0]);
                 break;
             case R.id.Save_Setting_Alarm:
+
                 alarm.setAlarmName(edTypeLabel.getText().toString());
                 Alarm.Day[] days = Alarm.Day.values();
-                for (int i = 0; i < selectedDays.length; i++) {
-                    Log.v("Aclclc", selectedDays[i] + "");
-                }
                 for (int i = 0; i < selectedDays.length; i++) {
                     alarm.removeDay(days[i]);
                     if (selectedDays[i]) {

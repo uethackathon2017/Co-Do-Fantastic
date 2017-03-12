@@ -406,44 +406,45 @@ public class NewsFragment extends Fragment implements View.OnClickListener , GPS
 //                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 //
 //                } else {
-
-                    gpsTracker = new GPSTracker(getActivity(), getActivity(), this);
-
-                    // Check if GPS enabled
-                    if (gpsTracker.canGetLocation()) {
-
-//                        double latitude = gpsTracker.getLatitude();
-//                        double longitude = gpsTracker.getLongitude();
 //
+//                    gpsTracker = new GPSTracker(getActivity(), getActivity(), this);
 //
-//                        Log.i("TOADO", latitude + " " + longitude);
-//                        Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
-//                        List<Address> addresses = null;
-//                        try {
-//                            addresses = gcd.getFromLocation(latitude, longitude, 1);
-//                            if (addresses.size() > 0)
-//                            {
-//                                System.out.println(addresses.get(0).getLocality());
-//                                Log.i("place",addresses.get(0).getLocality());
-//                                JSONWeatherTask task = new JSONWeatherTask();
-//                                task.execute(new String[]{addresses.get(0).getLocality()});
-//                            }
-//                            else
-//                            {
-//                                // do your staff
-//                            }
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-                        String city = "Ha Noi, VN";
-                        JSONWeatherTask task = new JSONWeatherTask();
-                        task.execute(new String[]{city});
-
-                    } else {
-                        gpsTracker.showSettingsAlert();
-                    }
-                //}
-
+//                    // Check if GPS enabled
+//                    if (gpsTracker.canGetLocation()) {
+//                        Log.v("NewsFragment", "Ok");
+////                        double latitude = gpsTracker.getLatitude();
+////                        double longitude = gpsTracker.getLongitude();
+////
+////
+////                        Log.i("TOADO", latitude + " " + longitude);
+////                        Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
+////                        List<Address> addresses = null;
+////                        try {
+////                            addresses = gcd.getFromLocation(latitude, longitude, 1);
+////                            if (addresses.size() > 0)
+////                            {
+////                                System.out.println(addresses.get(0).getLocality());
+////                                Log.i("place",addresses.get(0).getLocality());
+////                                JSONWeatherTask task = new JSONWeatherTask();
+////                                task.execute(new String[]{addresses.get(0).getLocality()});
+////                            }
+////                            else
+////                            {
+////                                // do your staff
+////                            }
+////                        } catch (IOException e) {
+////                            e.printStackTrace();
+////                        }
+//                        String city = "Ha Noi, VN";
+//                        JSONWeatherTask task = new JSONWeatherTask();
+//                        task.execute(new String[]{city});
+//
+//                    } else {
+//                        Log.v("NewsFragment", "No");
+//                        gpsTracker.showSettingsAlert();
+//                    }
+//                }
+                getLatLong();
                 break;
 
             case R.id.relaytive_continues_Home:
@@ -777,7 +778,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener , GPS
     private void checkPermission() {
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
 
         }
     }
@@ -817,7 +818,53 @@ public class NewsFragment extends Fragment implements View.OnClickListener , GPS
                     // functionality that depends on this permission.
                     Toast.makeText(getActivity(), "You need to grant permission", Toast.LENGTH_SHORT).show();
                 }
-                return;
+
+            }
+        }
+    }
+
+    private void getLatLong() {
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        } else {
+            gpsTracker = new GPSTracker(getActivity(), getActivity(), this);
+
+            // Check if GPS enabled
+            if (gpsTracker.canGetLocation()) {
+
+                double latitude = gpsTracker.getLatitude();
+                double longitude = gpsTracker.getLongitude();
+                Log.v("NewsFragment", latitude + " " + longitude);
+
+                Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
+                        List<Address> addresses = null;
+                        try {
+                            addresses = gcd.getFromLocation(latitude, longitude, 1);
+                            if (addresses.size() > 0)
+                            {
+                                System.out.println(addresses.get(0).getLocality());
+                                Log.i("place",addresses.get(0).getLocality());
+                                JSONWeatherTask task = new JSONWeatherTask();
+                                task.execute(new String[]{addresses.get(0).getLocality()});
+                            }
+                            else
+                            {
+                                // do your staff
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+//                        String city = "Ha Noi, VN";
+//                        JSONWeatherTask task = new JSONWeatherTask();
+//                        task.execute(new String[]{city});
+
+            } else {
+                // Can't get location.
+                // GPS or network is not enabled.
+                // Ask user to enable GPS/network in settings.
+                gpsTracker.showSettingsAlert();
             }
         }
     }
@@ -825,6 +872,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener , GPS
     @Override
     public void onResume() {
         super.onResume();
+        //getLatLong();
         checkPermission();
     }
 }
