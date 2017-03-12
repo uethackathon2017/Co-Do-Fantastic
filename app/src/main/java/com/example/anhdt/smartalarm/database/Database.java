@@ -29,9 +29,9 @@ public class Database extends SQLiteOpenHelper{
     static Database instance = null;
     static SQLiteDatabase database = null;
 
-    static final String DATABASE_NAME = "DB";
+    static final String DATABASE_NAME = "DBAA";
 
-    static final int DATABASE_VERSION = 3;
+    static final int DATABASE_VERSION = 1;
 
 
     public static final String ALARM_TABLE = "alarm";

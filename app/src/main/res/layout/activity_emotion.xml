@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".challenges.recognize.activities.EmotionActivity">
+    android:orientation="vertical"
+    tools:context=".challenges.recognize.activities.EmotionActivity"
+    android:background="@mipmap/background_application">
+
+    <LinearLayout
+        android:id="@+id/user_interaction_layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:text="THỬ THÁCH CHỤP ẢNH"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
@@ -16,47 +33,37 @@
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:textColor="@android:color/black"
-            android:text="Take a photo with hapiness style"/>
+            android:layout_margin="17sp"
+            android:textColor="@android:color/white"
+            android:text="Hãy cười thật tươi chụp ảnh để có thể vượt qua thử thách"/>
+
         <RelativeLayout
-            android:orientation="vertical"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
             <ImageView
-
                 android:id="@+id/selectedImage"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:background="#E0E0E0"
-                android:onClick="selectImage"/>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#25E0E0E0"
+                android:onClick="selectImage" />
+
             <TextView
+                android:id="@+id/tvSelectImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" Take a Photo"
-                android:textColor="@android:color/black"
                 android:layout_centerInParent="true"
-                android:id="@+id/tvSelectImage"
-                />
+                android:text="Nhấn để chụp ảnh"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"/>
+
 
         </RelativeLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_weight="1.03">
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:inputType="textMultiLine"
-                android:ems="10"
-                android:id="@+id/editTextResult"
-                android:layout_weight="1" />
-        </LinearLayout>
+
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
