@@ -510,6 +510,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
+                    android:background="@drawable/logo_news"
                     />
 
                 <TextView
@@ -537,6 +538,7 @@
                     android:id="@+id/image_news_2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/logo_news"
                     android:scaleType="centerCrop"/>
                 <TextView
                     android:id="@+id/news_2_Title"
@@ -564,6 +566,7 @@
                     android:id="@+id/image_news_3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/logo_news"
                     android:scaleType="centerCrop"/>
                 <TextView
                     android:id="@+id/news_3_Title"

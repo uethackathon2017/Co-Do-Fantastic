@@ -79,6 +79,9 @@ public class CountStepActivity extends AppCompatActivity {
                             if (!CountStepActivity.this.isFinishing()) {
                                 createSuccessAlertDialog("Thông báo", "Bạn đã vượt qua thử thách thành công!");
                             }
+
+                            stopService(playIntent);
+                            CountStepActivity.this.finish();
                         }
                         else {
                             if (!CountStepActivity.this.isFinishing()) {
@@ -168,6 +171,9 @@ public class CountStepActivity extends AppCompatActivity {
                     if (!CountStepActivity.this.isFinishing()) {
                         createSuccessAlertDialog("Thông báo", "Bạn đã vượt qua thử thách thành công!");
                     }
+
+                    stopService(playIntent);
+                    CountStepActivity.this.finish();
                 }
                 else {
                     arcProgress.setProgress(mStepCount);

@@ -54,7 +54,9 @@
 
         <activity android:name=".activities.ListNewsActivity" />
         <activity android:name=".activities.DisPlayWebPageActivity" />
-        <activity android:name=".activities.CaculateActivity" />
+        <activity android:name=".activities.CaculateActivity" >
+
+        </activity>
 
         <receiver android:name=".receivers.AlarmAlertBroadcastReceiver" />
 

@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.anhdt.smartalarm.R;
@@ -43,13 +44,14 @@ public class CaculateActivity extends BaseActivity implements View.OnClickListen
     private boolean alarmActive;
 
     private TextView problemView;
-    private TextView answerView;
+    private EditText answerView;
     private String answerString;
 
     //test
     private PlayRingToneService playRingToneService;
     private Intent playIntent;
-
+    private Button Button_Submit;
+    float KQ;
     private boolean playBound = false;
 
     @Override
@@ -83,22 +85,12 @@ public class CaculateActivity extends BaseActivity implements View.OnClickListen
         problemView = (TextView) findViewById(R.id.textView1);
         problemView.setText(mathProblem.toString());
 
-        answerView = (TextView) findViewById(R.id.textView2);
-        answerView.setText("= ?");
+        answerView = (EditText) findViewById(R.id.textView2);
 
-        ((Button) findViewById(R.id.Button0)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button1)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button2)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button3)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button4)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button5)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button6)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button7)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button8)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button9)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button_clear)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button_decimal)).setOnClickListener(this);
-        ((Button) findViewById(R.id.Button_minus)).setOnClickListener(this);
+        Button_Submit = (Button) findViewById(R.id.Button_Submit);
+        Button_Submit.setOnClickListener(this);
+
+
     }
 
     @Override
@@ -146,52 +138,20 @@ public class CaculateActivity extends BaseActivity implements View.OnClickListen
         if (!alarmActive)
             return;
         String button = (String) v.getTag();
-        v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-        if (button.equalsIgnoreCase("clear")) {
-            if (answerBuilder.length() > 0) {
-                answerBuilder.setLength(answerBuilder.length() - 1);
-                answerView.setText(answerBuilder.toString());
-            }
-        } else if (button.equalsIgnoreCase(".")) {
-            if (!answerBuilder.toString().contains(button)) {
-                if (answerBuilder.length() == 0)
-                    answerBuilder.append(0);
-                answerBuilder.append(button);
-                answerView.setText(answerBuilder.toString());
-            }
-        } else if (button.equalsIgnoreCase("-")) {
-            if (answerBuilder.length() == 0) {
-                answerBuilder.append(button);
-                answerView.setText(answerBuilder.toString());
-            }
-        } else {
-            answerBuilder.append(button);
-            answerView.setText(answerBuilder.toString());
-            if (isAnswerCorrect()) {
+
+        if(v.getId() == R.id.Button_Submit){
+            KQ = Float.parseFloat(answerView.getText().toString());
+
+            if(mathProblem.getAnswer() == KQ){
                 alarmActive = false;
+                Intent intent = new Intent(this,WakeUpActivity.class);
+                startActivity(intent);
                 stopService(playIntent);
                 this.finish();
             }
         }
-        if (answerView.getText().length() >= answerString.length()
-                && !isAnswerCorrect()) {
-            answerView.setTextColor(Color.RED);
-        } else {
-            answerView.setTextColor(Color.BLACK);
-        }
+
     }
 
-    public boolean isAnswerCorrect() {
-        boolean correct = false;
-        try {
-            correct = mathProblem.getAnswer() == Float.parseFloat(answerBuilder
-                    .toString());
-        } catch (NumberFormatException e) {
-            return false;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return correct;
-    }
+
 }

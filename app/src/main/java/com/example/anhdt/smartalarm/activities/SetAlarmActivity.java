@@ -426,16 +426,15 @@ public class SetAlarmActivity extends BaseActivity implements OnClickListener{
                 btn_CN.setSelected(selectedDays[0]);
                 break;
             case R.id.Save_Setting_Alarm:
-
                 alarm.setAlarmName(edTypeLabel.getText().toString());
                 Alarm.Day[] days = Alarm.Day.values();
                 for (int i = 0; i < selectedDays.length; i++) {
                     alarm.removeDay(days[i]);
                     if (selectedDays[i]) {
-                        Log.v("asasas", days[i].toString());
                         alarm.addDay(days[i]);
                     }
                 }
+
                 alarm.setChallenge(getMathAlarm().getChallenge());
                 alarm.setDifficulty(Alarm.Difficulty.EASY);
                 Database.init(getApplicationContext());
